@@ -147,6 +147,7 @@ export default function Contact() {
                     <a
                       href={item.href}
                       target={item.target}
+                      rel={item.target === "_blank" ? "noopener noreferrer" : undefined}
                       className="font-sans text-sm text-(--text) hover:text-primary transition-colors truncate block"
                     >
                       {item.value}

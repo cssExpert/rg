@@ -80,6 +80,7 @@ export default function ProjectModal({
             <Image
               src={project.thumbnail}
               fill
+              sizes="(max-width: 640px) 100vw, (max-width: 768px) 90vw, 768px"
               alt={project.title}
               className="object-cover object-center"
             />
