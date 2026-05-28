@@ -18,9 +18,13 @@ export const skills = [
   { name: "Tailwind CSS", icon: "tailwind", level: 95 },
   { name: "Bootstrap", icon: "bootstrap", level: 92 },
   { name: "Figma", icon: "figma", level: 88 },
+  { name: "Photoshop", icon: "photoshop", level: 92 },
+  { name: "Experience Design", icon: "experience", level: 90 },
+  { name: "Illustrator", icon: "illustrator", level: 85 },
   { name: "WordPress", icon: "wordpress", level: 90 },
   { name: "Git", icon: "git", level: 88 },
   { name: "Node.js", icon: "node", level: 75 },
+  { name: "jQuery", icon: "jquery", level: 75 },
 ];
 
 // Services
