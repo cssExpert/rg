@@ -111,7 +111,7 @@ export default function Experience() {
                       {item.skills.map((skill) => (
                         <span
                           key={skill}
-                          className="px-2.5 py-1 rounded-md bg-white/4 border border-white/8 font-sans text-xs text-(--text-muted)"
+                          className="px-2.5 py-1 rounded-md bg-white/4 border border-white/8 light:border-dark/12 font-sans text-xs text-(--text-muted)"
                         >
                           {skill}
                         </span>
