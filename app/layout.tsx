@@ -1,20 +1,20 @@
-import type { Metadata } from "next"
-import { Bebas_Neue, Inter } from "next/font/google"
-import "./globals.css"
-import { ThemeProvider } from "@/components/ThemeProvider"
+import type { Metadata } from "next";
+import { Bebas_Neue, Inter } from "next/font/google";
+import "./globals.css";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 const bebasNeue = Bebas_Neue({
   weight: "400",
   subsets: ["latin"],
   variable: "--font-bebas-neue",
   display: "swap",
-})
+});
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
   display: "swap",
-})
+});
 
 export const metadata: Metadata = {
   title: "Ravi Gupta | Senior Frontend Developer & UI/UX Specialist",
@@ -45,8 +45,11 @@ export const metadata: Metadata = {
     description:
       "Building premium digital experiences with modern web technologies.",
   },
+  icons: {
+    icon: "/favicon.svg",
+  },
   robots: { index: true, follow: true },
-}
+};
 
 export default function RootLayout({
   children,
@@ -61,5 +64,5 @@ export default function RootLayout({
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
-  )
+  );
 }
