@@ -38,7 +38,7 @@ This portfolio is built to represent my professional identity, showcase selected
 ## 📸 Screenshots
 
 ### Home Page
-![Home Page](./screenshots/RaviGupta.png)
+![Home Page](./screenshots/home.png)
 
 ### Dashboard
 ![Dashboard](./screenshots/RaviGupta.png)
