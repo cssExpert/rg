@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { ExternalLink, ArrowRight, Fullscreen } from "lucide-react";
+import { ExternalLink, Fullscreen } from "lucide-react";
 import { projects } from "@/lib/data";
 import ProjectModal from "@/components/ProjectModal";
 import Icon from "@/components/common/Icon";
@@ -201,9 +201,10 @@ export default function Projects() {
               ? `View More Projects (${filtered.length - visibleCount} left)`
               : "All Projects Loaded"}
             {hasMore && (
-              <ArrowRight
-                size={16}
-                className="transition-transform duration-300 group-hover:translate-x-1"
+              <Icon
+                name="LongArrow"
+                size="20"
+                className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"
               />
             )}
           </button>

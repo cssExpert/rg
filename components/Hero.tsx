@@ -1,8 +1,14 @@
 "use client";
 
-import { motion, useMotionValue, useTransform, animate, useInView } from "framer-motion";
+import {
+  motion,
+  useMotionValue,
+  useTransform,
+  animate,
+  useInView,
+} from "framer-motion";
 import { useEffect, useRef } from "react";
-import { ArrowRight, Download, ChevronDown } from "lucide-react";
+import { Download, ChevronDown } from "lucide-react";
 import { stats } from "@/lib/data";
 import Icon from "@/components/common/Icon";
 
@@ -149,9 +155,10 @@ export default function Hero() {
             >
               <button onClick={scrollToProjects} className="btn-primary group">
                 View Projects
-                <ArrowRight
-                  size={16}
-                  className="transition-transform duration-300 group-hover:translate-x-1"
+                <Icon
+                  name="LongArrow"
+                  size="20"
+                  className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"
                 />
               </button>
               <button onClick={scrollToContact} className="btn-outline">
@@ -265,15 +272,21 @@ export default function Hero() {
 
               {/* Experience badge */}
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                // animate={{ opacity: 1, y: 0 }}
-                // transition={{ delay: 1.6, duration: 0.5 }}
-                animate={{ y: -20, opacity: 1, scale: 1 }}
+                initial={{ opacity: 0, y: 0 }}
+                animate={{
+                  opacity: 1,
+                  scale: 1,
+                  y: [-20, 0], // Explicitly loops only between these two vertical positions
+                }}
                 transition={{
-                  duration: 1.5,
-                  ease: "easeInOut",
-                  repeat: Infinity,
-                  repeatType: "reverse", // Smoothly reverses the animation sequence
+                  opacity: { duration: 0.5 }, // Fades in quickly once
+                  scale: { duration: 0.5 }, // Scales up quickly once
+                  y: {
+                    duration: 1.5,
+                    ease: "easeInOut",
+                    repeat: Infinity,
+                    repeatType: "reverse", // Loops only the y-axis movement
+                  },
                 }}
                 className="absolute -bottom-4 left-1/2 -translate-x-1/2 glass-card border border-dark bg-dark light:bg-white light:border-dark/15 px-5 py-2.5 rounded-lg text-center whitespace-nowrap glow-primary"
               >

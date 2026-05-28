@@ -99,9 +99,14 @@ export default function Header() {
               {/* Hire Me CTA */}
               <button
                 onClick={() => scrollTo("#contact")}
-                className="hidden sm:flex btn-primary text-sm py-2 px-5 rounded-md"
+                className="group hidden sm:flex btn-primary text-sm py-2 px-5 rounded-md"
               >
                 Hire Me
+                <Icon
+                  name="LongArrow"
+                  size="20"
+                  className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"
+                />
               </button>
 
               {/* Theme toggle — suppressHydrationWarning handles the
@@ -190,10 +195,15 @@ export default function Header() {
             <div className="mt-auto px-6 pb-8">
               <button
                 onClick={() => scrollTo("#contact")}
-                className="btn-primary w-full justify-center"
+                className="group btn-primary w-full justify-center"
                 suppressHydrationWarning
               >
                 Hire Me
+                <Icon
+                  name="LongArrow"
+                  size="20"
+                  className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"
+                />
               </button>
             </div>
           </motion.div>

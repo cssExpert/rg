@@ -2,8 +2,8 @@
 
 import { motion } from "framer-motion";
 import { CheckCircle2 } from "lucide-react";
-import { stats } from "@/lib/data";
 import TiltCard from "./TiltCard";
+import Stats from "./Stats";
 
 const expertise = [
   "React.js & Next.js Applications",
@@ -107,21 +107,7 @@ export default function About() {
 
             {/* Stats overlay cards */}
             <div className="grid grid-cols-2 gap-3 mt-4 max-w-sm mx-auto lg:mx-0">
-              {stats.map((stat) => (
-                <motion.div
-                  key={stat.label}
-                  whileHover={{ y: -4 }}
-                  transition={{ duration: 0.2 }}
-                  className="glass-card rounded-xl p-4 text-center"
-                >
-                  <p className="font-heading text-3xl text-primary leading-none mb-1">
-                    {stat.value}
-                  </p>
-                  <p className="font-sans text-xs text-(--text-muted)">
-                    {stat.label}
-                  </p>
-                </motion.div>
-              ))}
+              <Stats />
             </div>
           </motion.div>
 
