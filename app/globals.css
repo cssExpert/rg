@@ -1,0 +1,308 @@
+@import "tailwindcss";
+
+/*
+  Tailwind v4 defaults dark: to prefers-color-scheme media query.
+  next-themes adds class="dark" on <html>, so we must tell Tailwind
+  to match the .dark ancestor instead of the media query.
+*/
+@variant dark (&:is(.dark *));
+
+/*
+  Tailwind v4 puts @theme values into :root as live CSS variables AND
+  references them in utility classes with var(). That means overriding
+  --color-primary in .light cascades automatically into EVERY Tailwind
+  *-primary utility (text, bg, border, fill, ring …) — no per-component
+  changes needed.
+
+  Accessible dark-olive-lime  #527200
+    contrast on #ffffff  ≈ 5.8:1  ✓  WCAG AA
+    contrast on #f8f8f8  ≈ 5.5:1  ✓  WCAG AA
+*/
+@theme {
+  --font-heading: var(--font-bebas-neue), "Bebas Neue", cursive;
+  --font-sans: var(--font-inter), Inter, sans-serif;
+  --color-primary: #ceff00;
+  --color-dark: #050505;
+  --color-darker: #0a0a0a;
+  --color-surface: #111111;
+  --color-surface-2: #161616;
+  --color-muted: #888888;
+}
+
+/* ─── Theme Variables ─── */
+:root {
+  /* --primary-fill : always bright lime — used for button backgrounds,
+                      progress fills, decorative dots. Dark text on lime
+                      gives ~18:1 — accessibility is never an issue.    */
+  --primary-fill: #ceff00;
+  --primary-fill-end: #80ff44; /* gradient second stop              */
+  --primary-gradient-end: #a8ff44; /* text-gradient second stop         */
+
+  --bg: #050505;
+  --bg-2: #0a0a0a;
+  --card: #111111;
+  --card-hover: #161616;
+  --text: #ffffff;
+  --text-muted: #888888;
+  --border: rgba(255, 255, 255, 0.06);
+  --border2: rgba(0, 0, 0, 0.06);
+  --border-hover: rgba(206, 255, 0, 0.3);
+  --projectBadge: #ffffff;
+}
+
+/*
+  Light mode overrides
+  --color-primary  overrides Tailwind's :root value so every
+                   text-primary / border-primary / fill-primary utility
+                   automatically picks up #527200 in light mode.
+*/
+.light {
+  --color-primary: #527200; /* ← the cascade fix                 */
+  --primary-gradient-end: #3a5300;
+
+  --bg: #f8f8f8;
+  --bg-2: #efefef;
+  --card: #ffffff;
+  --card-hover: #f5f5f5;
+  --text: #0a0a0a;
+  --text-muted: #555555;
+  --border: rgba(0, 0, 0, 0.08);
+  --border2: rgba(0, 0, 0, 0.08);
+  --border-hover: rgba(82, 114, 0, 0.3);
+  --projectBadge: #ceff00;
+}
+
+/* ─── Base ─── */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  transition:
+    background-color 0.4s ease,
+    color 0.4s ease;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-heading);
+  letter-spacing: 0.02em;
+}
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #050505;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--primary-fill);
+  border-radius: 2px;
+}
+
+/* ─── Selection ─── */
+::selection {
+  background: rgba(206, 255, 0, 0.15);
+  color: var(--color-primary);
+}
+
+/* ─── Components ─── */
+@layer components {
+  /* Glass card */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    transition:
+      border-color 0.3s ease,
+      box-shadow 0.3s ease,
+      background 0.3s ease;
+  }
+  .glass-card:hover {
+    border-color: var(--border-hover);
+    box-shadow: 0 0 32px rgba(206, 255, 0, 0.07);
+  }
+  .light .glass-card {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+  }
+  .light .glass-card:hover {
+    box-shadow: 0 0 24px rgba(82, 114, 0, 0.07);
+  }
+
+  /* Primary button — background is always bright lime (#ceff00) so that
+     dark text on lime always achieves ~18:1. The hover state inverts:
+     transparent bg + var(--color-primary) text, which is accessible in
+     both themes (#ceff00 on dark bg, #527200 on light bg).             */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--primary-fill);
+    color: #050505;
+    border: 2px solid var(--primary-fill);
+    font-family: var(--font-heading);
+    letter-spacing: 0.08em;
+    font-size: 1rem;
+    padding: 0.75rem 2rem;
+    border-radius: 0.375rem;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .btn-primary:hover {
+    background-color: transparent;
+    color: var(--color-primary); /* #ceff00 dark / #527200 light  */
+    border-color: var(--color-primary);
+    box-shadow: 0 0 28px rgba(206, 255, 0, 0.3);
+  }
+  .light .btn-primary:hover {
+    box-shadow: 0 0 22px rgba(82, 114, 0, 0.2);
+  }
+
+  /* Outline button */
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: transparent;
+    color: var(--text);
+    border: 2px solid var(--border);
+    font-family: var(--font-heading);
+    letter-spacing: 0.08em;
+    font-size: 1rem;
+    padding: 0.75rem 2rem;
+    border-radius: 0.375rem;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .btn-outline:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary); /* accessible in both themes      */
+    box-shadow: 0 0 20px rgba(206, 255, 0, 0.12);
+  }
+  .light .btn-outline:hover {
+    box-shadow: 0 0 16px rgba(82, 114, 0, 0.1);
+  }
+
+  /* Section label */
+  .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-primary); /* cascades: lime dark / olive light */
+    margin-bottom: 1rem;
+    font-family: var(--font-sans);
+  }
+  .section-label::before {
+    content: "";
+    display: block;
+    width: 2rem;
+    height: 2px;
+    background: var(--color-primary);
+    border-radius: 1px;
+    flex-shrink: 0;
+  }
+
+  /* Gradient text — second stop uses per-theme variable */
+  .text-gradient {
+    background: linear-gradient(
+      135deg,
+      var(--color-primary) 0%,
+      var(--primary-gradient-end) 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Glow */
+  .glow-primary {
+    box-shadow: 0 0 32px rgba(206, 255, 0, 0.25);
+  }
+  .light .glow-primary {
+    box-shadow: 0 0 24px rgba(82, 114, 0, 0.18);
+  }
+
+  /* Grid background */
+  .grid-bg {
+    background-image:
+      linear-gradient(rgba(206, 255, 0, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(206, 255, 0, 0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  /* Skill bar fill — always uses the bright lime fill for visual impact */
+  .skill-bar-fill {
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      var(--primary-fill),
+      var(--primary-fill-end)
+    );
+    border-radius: 999px;
+    position: relative;
+    overflow: hidden;
+  }
+  .skill-bar-fill::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.3),
+      transparent
+    );
+    animation: shimmer 2.5s infinite;
+  }
+  @keyframes shimmer {
+    to {
+      left: 200%;
+    }
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 50px;
+    background: linear-gradient(to bottom, var(--primary-fill), transparent);
+    animation: lineDown 1.8s ease-in-out infinite;
+  }
+
+  @keyframes lineDown {
+    0% {
+      transform: scaleY(0);
+      transform-origin: top;
+    }
+    50% {
+      transform: scaleY(1);
+      transform-origin: top;
+    }
+    51% {
+      transform-origin: bottom;
+    }
+    100% {
+      transform: scaleY(0);
+      transform-origin: bottom;
+    }
+  }
+}
