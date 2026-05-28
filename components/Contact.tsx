@@ -279,6 +279,7 @@ export default function Contact() {
                         className="animate-spin h-4 w-4"
                         viewBox="0 0 24 24"
                         fill="none"
+                        aria-hidden="true"
                       >
                         <circle
                           className="opacity-25"

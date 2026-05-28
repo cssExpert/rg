@@ -30,7 +30,7 @@ const Icon: React.FC<IconProperties> = ({
   title,
   size = "16",
   name,
-  role = "img",
+  role,
   ...props
 }) => (
   <svg
@@ -38,7 +38,8 @@ const Icon: React.FC<IconProperties> = ({
     width={size}
     height={size}
     viewBox={viewBox}
-    role={role}
+    role={title ? (role ?? "img") : role}
+    aria-hidden={title ? undefined : true}
     {...props}
   >
     {title && <title>{title}</title>}

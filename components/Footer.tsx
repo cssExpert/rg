@@ -80,9 +80,9 @@ export default function Footer() {
 
           {/* Navigation */}
           <div>
-            <h4 className="font-heading text-base tracking-widest text-(--text) mb-5">
+            <h3 className="font-heading text-base tracking-widest text-(--text) mb-5">
               NAVIGATION
-            </h4>
+            </h3>
             <ul className="space-y-3">
               {navLinks.map((link) => (
                 <li key={link.href}>
@@ -103,9 +103,9 @@ export default function Footer() {
 
           {/* Services */}
           <div>
-            <h4 className="font-heading text-base tracking-widest text-(--text) mb-5">
+            <h3 className="font-heading text-base tracking-widest text-(--text) mb-5">
               SERVICES
-            </h4>
+            </h3>
             <ul className="space-y-3">
               {[
                 "UI/UX Design",
