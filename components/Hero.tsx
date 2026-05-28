@@ -2,7 +2,8 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight, Download, ChevronDown } from "lucide-react";
-import { techStack, stats } from "@/lib/data";
+import { stats } from "@/lib/data";
+import Icon from "@/components/common/Icon";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -196,8 +197,8 @@ export default function Hero() {
                   {/* Avatar placeholder with initials */}
                   <div className="flex flex-col items-center gap-2">
                     <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-linear-to-br from-primary/30 to-primary/10 border-2 border-primary/40 flex items-center justify-center">
-                      <span className="font-heading text-3xl sm:text-4xl text-primary tracking-widest">
-                        RG
+                      <span className="font-heading text-3xl sm:text-4xl text-(--text) tracking-widest">
+                        <Icon name="Brand" size="36" className="w-9 h-9" />
                       </span>
                     </div>
                     <div className="text-center">

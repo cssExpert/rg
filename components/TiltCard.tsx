@@ -65,9 +65,9 @@ const TiltCard = React.forwardRef<HTMLDivElement, TiltCardProps>(
       >
         {/* Spotlight overlay */}
         <div
-          className="absolute inset-0 pointer-events-none opacity-0 group-hover/card:opacity-100 transition-opacity duration-500"
+          className="absolute inset-0 pointer-events-none opacity-0 group-hover/card:opacity-100 transition-opacity duration-500 [--spot:rgba(255,255,255,0.05)] light:[--spot:rgba(206,255,0,0.075)]"
           style={{
-            background: `radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(255, 255, 255, 0.05), transparent 80%)`,
+            background: `radial-gradient(400px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), var(--spot), transparent 80%)`,
           }}
         />
 

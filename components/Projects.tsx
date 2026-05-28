@@ -3,9 +3,10 @@
 import { useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { ExternalLink, GitFork, ArrowRight, Fullscreen } from "lucide-react";
+import { ExternalLink, ArrowRight, Fullscreen } from "lucide-react";
 import { projects } from "@/lib/data";
 import ProjectModal from "@/components/ProjectModal";
+import Icon from "@/components/common/Icon";
 
 const categories = [
   "All",
@@ -89,7 +90,7 @@ export default function Projects() {
                 onClick={() => changeCategory(cat)}
                 className={`px-4 py-2 rounded-full font-sans text-xs font-semibold tracking-wide transition-all duration-300 border cursor-pointer ${
                   active === cat
-                    ? "bg-primary text-black border-primary"
+                    ? "bg-primary text-black light:text-white border-primary"
                     : "border-(--border) text-(--text-muted) hover:border-primary/40 hover:text-(--text)"
                 }`}
               >
@@ -173,7 +174,7 @@ export default function Projects() {
                       href={project.githubUrl}
                       className="flex items-center gap-1.5 font-sans text-xs font-semibold text-(--text-muted) hover:text-(--text)"
                     >
-                      <GitFork size={12} /> GitHub
+                      <Icon name="Git" size="12" className="w-3 h-3" /> GitHub
                     </a>
                   </div>
                 </div>
