@@ -33,6 +33,37 @@ This portfolio is built to represent my professional identity, showcase selected
 
 “Turning ideas into visually engaging and scalable digital experiences.”
 
+---
+
+## 📸 Screenshots
+
+### Home Page
+![Home Page](./screenshots/RaviGupta.png)
+
+### Dashboard
+![Dashboard](./screenshots/RaviGupta.png)
+
+### Mobile View
+![Mobile View](./screenshots/RaviGupta.png)
+
+<p align="center">
+	<img src="./screenshots/RaviGupta.png" width="45%" />
+</p>
+
+---
+
+## 🌐 Live Demo
+
+Add your live project link here.
+
+Example:
+
+```bash
+https://rg-portfolio-opal.vercel.app/
+```
+
+---
+
 ## 👨‍💻 Author
 
 Developed by Ravi Gupta
