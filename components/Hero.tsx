@@ -1,9 +1,26 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useTransform, animate, useInView } from "framer-motion";
+import { useEffect, useRef } from "react";
 import { ArrowRight, Download, ChevronDown } from "lucide-react";
 import { stats } from "@/lib/data";
 import Icon from "@/components/common/Icon";
+
+function CountUp({ value }: { value: string }) {
+  const match = value.match(/^(\d+)(.*)$/);
+  const num = match ? parseInt(match[1]) : 0;
+  const suffix = match ? match[2] : "";
+  const count = useMotionValue(0);
+  const display = useTransform(count, (v) => `${Math.round(v)}${suffix}`);
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true });
+
+  useEffect(() => {
+    if (inView) animate(count, num, { duration: 2, ease: "easeOut" });
+  }, [inView, count, num]);
+
+  return <motion.span ref={ref}>{display}</motion.span>;
+}
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -161,7 +178,7 @@ export default function Hero() {
               {stats.map((stat) => (
                 <div key={stat.label} className="text-center sm:text-left">
                   <p className="font-heading text-3xl sm:text-4xl text-primary leading-none">
-                    {stat.value}
+                    <CountUp value={stat.value} />
                   </p>
                   <p className="font-sans text-xs text-(--text-muted) tracking-wide mt-1">
                     {stat.label}
@@ -202,7 +219,7 @@ export default function Hero() {
                       </span>
                     </div>
                     <div className="text-center">
-                      <p className="font-heading text-base text-(--text) tracking-wider">
+                      <p className="font-heading text-base md:text-xl text-(--text) tracking-wider">
                         RAVI GUPTA
                       </p>
                       <p className="font-sans text-xs text-(--text-muted) tracking-wide">
@@ -222,7 +239,11 @@ export default function Hero() {
                   transition={{
                     delay: card.delay,
                     duration: 0.5,
-                    ease: "backOut",
+                    ease: "easeIn",
+                  }}
+                  whileHover={{
+                    x: [0, -4, 4, -4, 4, -2, 2, 0],
+                    transition: { duration: 0.4 },
                   }}
                   style={{
                     top: card.top,
@@ -245,11 +266,18 @@ export default function Hero() {
               {/* Experience badge */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.6, duration: 0.5 }}
-                className="absolute -bottom-4 left-1/2 -translate-x-1/2 glass-card px-5 py-2.5 rounded-2xl text-center whitespace-nowrap glow-primary"
+                // animate={{ opacity: 1, y: 0 }}
+                // transition={{ delay: 1.6, duration: 0.5 }}
+                animate={{ y: -20, opacity: 1, scale: 1 }}
+                transition={{
+                  duration: 1.5,
+                  ease: "easeInOut",
+                  repeat: Infinity,
+                  repeatType: "reverse", // Smoothly reverses the animation sequence
+                }}
+                className="absolute -bottom-4 left-1/2 -translate-x-1/2 glass-card border border-dark bg-dark light:bg-white light:border-dark/15 px-5 py-2.5 rounded-lg text-center whitespace-nowrap glow-primary"
               >
-                <p className="font-heading text-xl text-primary leading-none">
+                <p className="font-heading text-xl md:text-2xl lg:text-3xl text-primary leading-none">
                   18+
                 </p>
                 <p className="font-sans text-xs text-primary">Years Exp.</p>
