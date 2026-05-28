@@ -31,3 +31,11 @@ HTML5 & CSS3
 This portfolio is built to represent my professional identity, showcase selected work, and create meaningful opportunities for collaboration and freelance projects.
 
 “Turning ideas into visually engaging and scalable digital experiences.”
+
+# 👨‍💻 Author
+
+Developed by Ravi Gupta
+
+    GitHub: https://github.com/officialRaviG
+    Portfolio: https://officialravig.github.io/row-full/
+
