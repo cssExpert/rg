@@ -191,8 +191,8 @@ export default function Hero() {
               />
 
               {/* Profile image area */}
-              <div className="absolute inset-8 rounded-full bg-linear-to-br from-primary/20 via-surface to-darker border border-primary/20 overflow-hidden flex items-end justify-center">
-                <div className="w-full h-full bg-linear-to-br from-[#1a1a1a] to-dark flex items-center justify-center">
+              <div className="absolute inset-8 rounded-full bg-linear-to-br from-primary/20 via-surface to-darker light:via-(--card) light:to-(--bg-2) border border-primary/20 overflow-hidden flex items-end justify-center">
+                <div className="w-full h-full bg-linear-to-br from-[#1a1a1a] to-dark light:from-(--bg-2) light:to-(--card) flex items-center justify-center">
                   {/* Avatar placeholder with initials */}
                   <div className="flex flex-col items-center gap-2">
                     <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-linear-to-br from-primary/30 to-primary/10 border-2 border-primary/40 flex items-center justify-center">

@@ -66,10 +66,12 @@ function SkillCard({ skill, index }: { skill: (typeof skills)[0]; index: number 
     >
       {/* Icon badge */}
       <div
+        suppressHydrationWarning
         className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-all duration-300 group-hover:scale-110"
         style={{ background: bgColor }}
       >
         <span
+          suppressHydrationWarning
           className="font-mono font-bold text-sm tracking-tight"
           style={{ color: textColor }}
         >
@@ -83,6 +85,7 @@ function SkillCard({ skill, index }: { skill: (typeof skills)[0]; index: number 
           {skill.name}
         </p>
         <span
+          suppressHydrationWarning
           className="font-mono text-xs font-bold"
           style={{ color: textColor }}
         >
@@ -95,6 +98,7 @@ function SkillCard({ skill, index }: { skill: (typeof skills)[0]; index: number 
           and light (rgba black/8) backgrounds.                          */}
       <div className="h-1.5 rounded-full overflow-hidden" style={{ background: "var(--border)" }}>
         <div
+          suppressHydrationWarning
           className="h-full rounded-full relative overflow-hidden"
           style={{
             width: animated ? `${skill.level}%` : "0%",

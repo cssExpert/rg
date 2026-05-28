@@ -13,8 +13,6 @@ export default function Header() {
   const [activeSection, setActiveSection] = useState("home");
 
   const { resolvedTheme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     const onScroll = () => {
@@ -106,38 +104,39 @@ export default function Header() {
                 Hire Me
               </button>
 
-              {/* Theme toggle — only rendered after hydration to prevent mismatch */}
-              {mounted && (
-                <button
-                  onClick={() =>
-                    setTheme(resolvedTheme === "dark" ? "light" : "dark")
-                  }
-                  aria-label="Toggle Theme"
-                  suppressHydrationWarning
-                  className="w-10 h-10 flex items-center justify-center rounded-md bg-white/10 border border-(--border) text-(--text-muted) hover:text-primary hover:border-primary/40 transition-all duration-300 cursor-pointer"
-                >
-                  <AnimatePresence mode="wait" initial={false}>
-                    <motion.span
-                      key={resolvedTheme}
-                      initial={{ rotate: -90, opacity: 0, scale: 0.6 }}
-                      animate={{ rotate: 0, opacity: 1, scale: 1 }}
-                      exit={{ rotate: 90, opacity: 0, scale: 0.6 }}
-                      transition={{ duration: 0.25 }}
-                    >
-                      {resolvedTheme === "dark" ? (
-                        <Moon size={20} fill="text-primary" />
-                      ) : (
-                        <Sun size={20} fill="text-primary" />
-                      )}
-                    </motion.span>
-                  </AnimatePresence>
-                </button>
-              )}
+              {/* Theme toggle — suppressHydrationWarning handles the
+                  server(undefined) → client(dark|light) icon difference
+                  without needing a mounted gate or a setState-in-effect */}
+              <button
+                suppressHydrationWarning
+                onClick={() =>
+                  setTheme(resolvedTheme === "dark" ? "light" : "dark")
+                }
+                aria-label="Toggle Theme"
+                className="w-10 h-10 flex items-center justify-center rounded-md bg-white/10 border border-(--border) text-(--text-muted) hover:text-primary hover:border-primary/40 transition-all duration-300 cursor-pointer"
+              >
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.span
+                    key={resolvedTheme}
+                    initial={{ rotate: -90, opacity: 0, scale: 0.6 }}
+                    animate={{ rotate: 0, opacity: 1, scale: 1 }}
+                    exit={{ rotate: 90, opacity: 0, scale: 0.6 }}
+                    transition={{ duration: 0.25 }}
+                    suppressHydrationWarning
+                  >
+                    {resolvedTheme === "dark" ? (
+                      <Moon size={20} />
+                    ) : (
+                      <Sun size={20} />
+                    )}
+                  </motion.span>
+                </AnimatePresence>
+              </button>
 
               {/* Mobile hamburger */}
               <button
                 onClick={() => setMobileOpen(!mobileOpen)}
-                className="lg:hidden w-9 h-9 flex items-center justify-center rounded-full border border-(--border) text-(--text-muted)"
+                className="w-10 h-10 cursor-pointer lg:hidden flex items-center justify-center bg-black light:bg-dark/10 rounded-md border border-(--border) text-(--text-muted)"
                 aria-label="Toggle Menu"
                 suppressHydrationWarning
               >
@@ -156,15 +155,18 @@ export default function Header() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: "100%" }}
             transition={{ type: "spring", damping: 30, stiffness: 300 }}
-            className="fixed inset-y-0 right-0 z-40 w-72 bg-(--bg-2) border-l border-(--border) lg:hidden flex flex-col"
+            className="fixed inset-y-0 right-0 z-52 w-72 bg-(--bg-2) border-l border-(--border) lg:hidden flex flex-col"
           >
             <div className="flex items-center justify-between px-6 py-5 border-b border-(--border)">
-              <span className="font-heading text-2xl tracking-widest text-(--text)">
-                RG<span className="text-primary">.</span>
-              </span>
+              <div className="inline-flex items-center gap-2">
+                <span className="text-(--text) group-hover:text-primary transition-colors duration-300">
+                  <Icon name="Brand" size="24" className="w-6 h-6" />
+                </span>
+                <span className="text-primary">.</span>
+              </div>
               <button
                 onClick={() => setMobileOpen(false)}
-                className="text-(--text-muted)"
+                className="cursor-pointer text-(--text-muted) hover:text-primary"
                 aria-label="Close Menu"
                 suppressHydrationWarning
               >
@@ -206,7 +208,7 @@ export default function Header() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setMobileOpen(false)}
-            className="fixed inset-0 z-30 bg-black/60 backdrop-blur-sm lg:hidden"
+            className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm lg:hidden"
           />
         )}
       </AnimatePresence>

@@ -49,12 +49,12 @@ export default function About() {
           >
             {/* Main image card */}
             <TiltCard className="p-4 sm:p-6 flex flex-col h-full">
-              <div className="relative rounded-2xl overflow-hidden border border-neutral-900 aspect-4/5 max-w-sm mx-auto lg:mx-0">
-                <div className="absolute inset-0 bg-linear-to-br from-[#1a1a1a] via-[#111] to-darker" />
+              <div className="relative rounded-2xl overflow-hidden border border-neutral-900 light:border-(--border) aspect-4/5 max-w-sm mx-auto lg:mx-0">
+                <div className="absolute inset-0 bg-linear-to-br from-[#1a1a1a] via-[#111] to-darker light:from-(--bg-2) light:via-(--card) light:to-(--card)" />
                 <div className="absolute inset-0 grid-bg opacity-40" />
                 <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
                   {/* Code snippet style decoration */}
-                  <div className="glass-card rounded-xl p-5 w-64 font-mono text-xs">
+                  <div className="glass-card rounded-xl p-5 w-64 font-mono text-xs h-[calc(full - 100px)]">
                     <div className="flex items-center gap-1.5 mb-3">
                       <div className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
                       <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/70" />

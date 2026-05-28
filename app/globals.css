@@ -6,6 +6,7 @@
   to match the .dark ancestor instead of the media query.
 */
 @variant dark (&:is(.dark *));
+@variant light (&:is(.light *));
 
 /*
   Tailwind v4 puts @theme values into :root as live CSS variables AND

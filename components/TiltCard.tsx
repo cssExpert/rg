@@ -61,7 +61,7 @@ const TiltCard = React.forwardRef<HTMLDivElement, TiltCardProps>(
             ? "transform 0.08s ease-out"
             : "transform 0.5s ease-out",
         }}
-        className={`relative rounded-2xl border border-white/10 bg-darker overflow-hidden group/card ${className}`}
+        className={`relative rounded-2xl border border-white/10 light:border-(--border) bg-darker light:bg-(--card) overflow-hidden group/card ${className}`}
       >
         {/* Spotlight overlay */}
         <div
