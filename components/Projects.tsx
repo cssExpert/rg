@@ -175,7 +175,8 @@ export default function Projects() {
                       href={project.githubUrl}
                       className="flex items-center gap-1.5 font-sans text-xs font-semibold text-(--text-muted) hover:text-(--text)"
                     >
-                      <Icon name="Git" size="12" className="w-3 h-3" /> GitHub
+                      <Icon name="GitHub" size="12" className="w-3 h-3" />{" "}
+                      GitHub
                     </a>
                   </div>
                 </div>

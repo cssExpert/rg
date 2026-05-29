@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Mail, MapPin, Link2, GitFork, Send, CheckCircle } from "lucide-react";
+import Icon from "@/components/common/Icon";
 
 const contactInfo = [
   {
@@ -13,14 +14,14 @@ const contactInfo = [
     target: "_blank",
   },
   {
-    icon: <Link2 size={18} />,
+    icon: <Icon name="LinkedIn" size="16" className="w-4 h-4" />,
     label: "LinkedIn",
     value: "https://www.linkedin.com/in/gr8ravi",
     href: "https://www.linkedin.com/in/gr8ravi",
     target: "_blank",
   },
   {
-    icon: <GitFork size={18} />,
+    icon: <Icon name="GitHub" size="18" className="w-4.5 h-4.5" />,
     label: "GitHub",
     value: "https://www.github.com/cssExpert",
     href: "https://www.github.com/cssExpert",
@@ -147,7 +148,11 @@ export default function Contact() {
                     <a
                       href={item.href}
                       target={item.target}
-                      rel={item.target === "_blank" ? "noopener noreferrer" : undefined}
+                      rel={
+                        item.target === "_blank"
+                          ? "noopener noreferrer"
+                          : undefined
+                      }
                       className="font-sans text-sm text-(--text) hover:text-primary transition-colors truncate block"
                     >
                       {item.value}

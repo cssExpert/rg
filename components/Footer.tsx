@@ -7,7 +7,7 @@ import Icon from "@/components/common/Icon";
 
 const socialLinks = [
   {
-    icon: <Icon name="Git" size="20" className="w-5 h-5" />,
+    icon: <Icon name="GitHub" size="20" className="w-5 h-5" />,
     href: "https://github.com/cssExpert",
     label: "GitHub",
   },
