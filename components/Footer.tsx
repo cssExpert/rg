@@ -146,7 +146,7 @@ export default function Footer() {
         onClick={scrollTop}
         whileHover={{ y: -3 }}
         aria-label="Scroll to top"
-        className="fixed bottom-8 right-6 z-40 w-10 h-10 rounded-full bg-primary text-white dark:text-dark flex items-center justify-center shadow-lg glow-primary hover:shadow-primary/40 transition-shadow duration-300"
+        className="cursor-pointer fixed bottom-8 right-6 z-40 w-10 h-10 rounded-full bg-primary text-white dark:text-dark flex items-center justify-center shadow-lg glow-primary hover:shadow-primary/40 transition-shadow duration-300"
       >
         <ArrowUp size={18} strokeWidth={2.5} />
       </motion.button>

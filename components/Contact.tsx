@@ -4,6 +4,8 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Mail, MapPin, Link2, GitFork, Send, CheckCircle } from "lucide-react";
 import Icon from "@/components/common/Icon";
+import { ContactSkeleton } from "@/components/common/Skeleton";
+import { useMounted } from "@/lib/useMounted";
 
 const contactInfo = [
   {
@@ -36,6 +38,7 @@ const contactInfo = [
 ];
 
 export default function Contact() {
+  const mounted = useMounted();
   const [formState, setFormState] = useState({
     name: "",
     email: "",
@@ -44,6 +47,8 @@ export default function Contact() {
   });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  if (!mounted) return <ContactSkeleton />;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

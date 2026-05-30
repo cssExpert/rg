@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Sun, Moon, Menu, X } from "lucide-react";
 import { navLinks } from "@/lib/data";
 import Icon from "@/components/common/Icon";
+import ScrambleText from "@/components/ScrambleText";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -82,7 +83,7 @@ export default function Header() {
                         : "text-(--text-muted) hover:text-(--text)"
                     }`}
                   >
-                    {link.label}
+                    <ScrambleText text={link.label} />
                     {isActive && (
                       <motion.span
                         layoutId="navActive"

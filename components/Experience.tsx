@@ -4,8 +4,13 @@ import { motion } from "framer-motion";
 import { BriefcaseBusiness, Calendar } from "lucide-react";
 import { experience } from "@/lib/data";
 import TiltCard from "./TiltCard";
+import { ExperienceSkeleton } from "@/components/common/Skeleton";
+import { useMounted } from "@/lib/useMounted";
 
 export default function Experience() {
+  const mounted = useMounted();
+  if (!mounted) return <ExperienceSkeleton />;
+
   return (
     <section
       id="experience"

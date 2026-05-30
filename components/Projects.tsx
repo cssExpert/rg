@@ -7,6 +7,8 @@ import { ExternalLink, Fullscreen } from "lucide-react";
 import { projects } from "@/lib/data";
 import ProjectModal from "@/components/ProjectModal";
 import Icon from "@/components/common/Icon";
+import { ProjectsSkeleton } from "@/components/common/Skeleton";
+import { useMounted } from "@/lib/useMounted";
 
 const categories = [
   "All",
@@ -20,9 +22,12 @@ const categories = [
 const PAGE_SIZE = 6;
 
 export default function Projects() {
+  const mounted = useMounted();
   const [active, setActive] = useState("All");
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const [modalIndex, setModalIndex] = useState<number | null>(null);
+
+  if (!mounted) return <ProjectsSkeleton />;
 
   const filtered =
     active === "All" ? projects : projects.filter((p) => p.category === active);

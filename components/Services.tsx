@@ -12,6 +12,8 @@ import {
 } from "lucide-react";
 import { services } from "@/lib/data";
 import TiltCard from "./TiltCard";
+import { ServicesSkeleton } from "@/components/common/Skeleton";
+import { useMounted } from "@/lib/useMounted";
 
 const iconMap: Record<string, React.ReactNode> = {
   Palette: <Palette size={24} />,
@@ -23,6 +25,9 @@ const iconMap: Record<string, React.ReactNode> = {
 };
 
 export default function Services() {
+  const mounted = useMounted();
+  if (!mounted) return <ServicesSkeleton />;
+
   return (
     <section
       id="services"

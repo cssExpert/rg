@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useTheme } from "next-themes";
+import { SkillsSkeleton } from "@/components/common/Skeleton";
+import { useMounted } from "@/lib/useMounted";
 import { motion, useInView } from "framer-motion";
 import { skills } from "@/lib/data";
 
@@ -162,6 +164,9 @@ function SkillCard({
 }
 
 export default function Skills() {
+  const mounted = useMounted();
+  if (!mounted) return <SkillsSkeleton />;
+
   return (
     <section
       id="skills"

@@ -11,6 +11,8 @@ import { useEffect, useRef } from "react";
 import { Download, ChevronDown } from "lucide-react";
 import { stats } from "@/lib/data";
 import Icon from "@/components/common/Icon";
+import { HeroSkeleton } from "@/components/common/Skeleton";
+import { useMounted } from "@/lib/useMounted";
 
 function CountUp({ value }: { value: string }) {
   const match = value.match(/^(\d+)(.*)$/);
@@ -61,6 +63,9 @@ const floatingCards = [
 ];
 
 export default function Hero() {
+  const mounted = useMounted();
+  if (!mounted) return <HeroSkeleton />;
+
   const scrollToProjects = () => {
     document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
   };

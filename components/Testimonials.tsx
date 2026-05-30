@@ -3,6 +3,8 @@
 import { motion } from "framer-motion"
 import { Quote, Star } from "lucide-react"
 import { testimonials } from "@/lib/data"
+import { TestimonialsSkeleton } from "@/components/common/Skeleton"
+import { useMounted } from "@/lib/useMounted"
 
 function StarRating({ count }: { count: number }) {
   return (
@@ -19,6 +21,9 @@ function StarRating({ count }: { count: number }) {
 }
 
 export default function Testimonials() {
+  const mounted = useMounted();
+  if (!mounted) return <TestimonialsSkeleton />;
+
   return (
     <section
       id="testimonials"

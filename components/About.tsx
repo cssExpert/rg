@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import { CheckCircle2 } from "lucide-react";
 import TiltCard from "./TiltCard";
 import Stats from "./Stats";
+import { AboutSkeleton } from "@/components/common/Skeleton";
+import { useMounted } from "@/lib/useMounted";
 
 const expertise = [
   "React.js & Next.js Applications",
@@ -28,6 +30,9 @@ const fadeUp = {
 };
 
 export default function About() {
+  const mounted = useMounted();
+  if (!mounted) return <AboutSkeleton />;
+
   return (
     <section
       id="about"
