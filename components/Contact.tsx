@@ -1,11 +1,16 @@
 "use client";
 
 import { useState } from "react";
+import emailjs from "@emailjs/browser";
 import { motion } from "framer-motion";
-import { Mail, MapPin, Link2, GitFork, Send, CheckCircle } from "lucide-react";
+import { Mail, MapPin, Send, CheckCircle } from "lucide-react";
 import Icon from "@/components/common/Icon";
 import { ContactSkeleton } from "@/components/common/Skeleton";
 import { useMounted } from "@/lib/useMounted";
+
+const EMAILJS_SERVICE_ID = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!;
+const EMAILJS_TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!;
+const EMAILJS_PUBLIC_KEY = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!;
 
 const contactInfo = [
   {
@@ -47,16 +52,33 @@ export default function Contact() {
   });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   if (!mounted) return <ContactSkeleton />;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
+    setError(null);
+    try {
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          from_name: formState.name,
+          from_email: formState.email,
+          subject: formState.subject,
+          message: formState.message,
+        },
+        EMAILJS_PUBLIC_KEY,
+      );
       setSubmitted(true);
-    }, 1400);
+    } catch (err) {
+      console.error("EmailJS error:", err);
+      setError("Something went wrong. Please try again or email me directly.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const inputClass =
@@ -121,9 +143,8 @@ export default function Contact() {
                   Available for new projects
                 </span>
               </div>
-              <p className="font-heading text-3xl text-(--text) leading-tight">
-                LET&apos;S WORK <br />
-                <span className="text-primary">TOGETHER</span>
+              <p className="font-heading text-3xl md:text-4xl lg:text-5xl text-(--text) leading-tight">
+                LET&apos;S WORK <span className="text-primary">TOGETHER</span>
               </p>
               <p className="font-sans text-sm text-(--text-muted) mt-3 leading-relaxed">
                 Whether it&apos;s a startup MVP, enterprise dashboard, or a
@@ -278,6 +299,12 @@ export default function Contact() {
                     className={`${inputClass} resize-none`}
                   />
                 </div>
+
+                {error && (
+                  <p className="font-sans text-sm text-red-400 text-center -mb-1">
+                    {error}
+                  </p>
+                )}
 
                 <button
                   type="submit"

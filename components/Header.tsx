@@ -7,6 +7,7 @@ import { Sun, Moon, Menu, X } from "lucide-react";
 import { navLinks } from "@/lib/data";
 import Icon from "@/components/common/Icon";
 import ScrambleText from "@/components/ScrambleText";
+import { useMounted } from "@/lib/useMounted";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -14,6 +15,7 @@ export default function Header() {
   const [activeSection, setActiveSection] = useState("home");
 
   const { resolvedTheme, setTheme } = useTheme();
+  const mounted = useMounted();
 
   useEffect(() => {
     const onScroll = () => {
@@ -110,33 +112,32 @@ export default function Header() {
                 />
               </button>
 
-              {/* Theme toggle — suppressHydrationWarning handles the
-                  server(undefined) → client(dark|light) icon difference
-                  without needing a mounted gate or a setState-in-effect */}
               <button
-                suppressHydrationWarning
                 onClick={() =>
                   setTheme(resolvedTheme === "dark" ? "light" : "dark")
                 }
                 aria-label="Toggle Theme"
                 className="w-10 h-10 flex items-center justify-center rounded-md bg-white/10 border border-(--border) text-(--text-muted) hover:text-primary hover:border-primary/40 transition-all duration-300 cursor-pointer"
               >
-                <AnimatePresence mode="wait" initial={false}>
-                  <motion.span
-                    key={resolvedTheme}
-                    initial={{ rotate: -90, opacity: 0, scale: 0.6 }}
-                    animate={{ rotate: 0, opacity: 1, scale: 1 }}
-                    exit={{ rotate: 90, opacity: 0, scale: 0.6 }}
-                    transition={{ duration: 0.25 }}
-                    suppressHydrationWarning
-                  >
-                    {resolvedTheme === "dark" ? (
-                      <Moon size={20} />
-                    ) : (
-                      <Sun size={20} />
-                    )}
-                  </motion.span>
-                </AnimatePresence>
+                {mounted ? (
+                  <AnimatePresence mode="wait" initial={false}>
+                    <motion.span
+                      key={resolvedTheme}
+                      initial={{ rotate: -90, opacity: 0, scale: 0.6 }}
+                      animate={{ rotate: 0, opacity: 1, scale: 1 }}
+                      exit={{ rotate: 90, opacity: 0, scale: 0.6 }}
+                      transition={{ duration: 0.25 }}
+                    >
+                      {resolvedTheme === "dark" ? (
+                        <Moon size={20} />
+                      ) : (
+                        <Sun size={20} />
+                      )}
+                    </motion.span>
+                  </AnimatePresence>
+                ) : (
+                  <span className="w-5 h-5" />
+                )}
               </button>
 
               {/* Mobile hamburger */}
