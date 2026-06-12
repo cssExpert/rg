@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import emailjs from "@emailjs/browser";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { motion } from "framer-motion";
 import { Mail, MapPin, Send, CheckCircle } from "lucide-react";
 import Icon from "@/components/common/Icon";
@@ -44,6 +45,7 @@ const contactInfo = [
 
 export default function Contact() {
   const mounted = useMounted();
+  const { executeRecaptcha } = useGoogleReCaptcha();
   const [formState, setFormState] = useState({
     name: "",
     email: "",
@@ -54,13 +56,25 @@ export default function Contact() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  if (!mounted) return <ContactSkeleton />;
-
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!executeRecaptcha) return;
     setLoading(true);
     setError(null);
     try {
+      const token = await executeRecaptcha("contact_form");
+
+      const captchaRes = await fetch("/api/verify-captcha", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token }),
+      });
+
+      if (!captchaRes.ok) {
+        setError("reCAPTCHA verification failed. Please try again.");
+        return;
+      }
+
       await emailjs.send(
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
@@ -74,12 +88,14 @@ export default function Contact() {
       );
       setSubmitted(true);
     } catch (err) {
-      console.error("EmailJS error:", err);
+      console.error("Contact form error:", err);
       setError("Something went wrong. Please try again or email me directly.");
     } finally {
       setLoading(false);
     }
-  };
+  }, [executeRecaptcha, formState]);
+
+  if (!mounted) return <ContactSkeleton />;
 
   const inputClass =
     "w-full bg-white/3 border border-[var(--border)] rounded-xl px-4 py-3.5 font-sans text-sm text-(--text) placeholder-[var(--text-muted)] outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/20 transition-all duration-300";

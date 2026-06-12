@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Bebas_Neue, Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import RecaptchaProvider from "@/components/RecaptchaProvider";
 
 const bebasNeue = Bebas_Neue({
   weight: "400",
@@ -61,7 +62,9 @@ export default function RootLayout({
       className={`${bebasNeue.variable} ${inter.variable}`}
     >
       <body className="min-h-screen antialiased">
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <RecaptchaProvider>{children}</RecaptchaProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
