@@ -166,17 +166,20 @@ export default function Hero() {
                   className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"
                 />
               </button>
-              <button onClick={scrollToContact} className="btn-outline">
+              <button
+                onClick={scrollToContact}
+                className="btn-outline bg-white dark:bg-dark"
+              >
                 Contact Me
               </button>
-              <a
+              {/* <a
                 href="#"
-                className="btn-outline flex items-center gap-2"
+                className="hidden btn-outline flex items-center gap-2"
                 aria-label="Download resume"
               >
                 <Download size={15} />
                 Resume
-              </a>
+              </a> */}
             </motion.div>
 
             {/* Stats row */}
