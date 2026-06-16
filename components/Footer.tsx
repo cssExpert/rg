@@ -40,6 +40,25 @@ export default function Footer() {
       <div className="h-px w-full bg-linear-to-r from-transparent via-primary/30 to-transparent" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Exit CTA */}
+        <div className="py-12 flex flex-col sm:flex-row items-center justify-between gap-6 border-b border-(--border)">
+          <div>
+            <p className="font-heading text-2xl sm:text-3xl text-(--text) leading-tight">
+              READY TO BUILD SOMETHING{" "}
+              <span className="text-primary">EXCEPTIONAL?</span>
+            </p>
+            <p className="font-sans text-xs text-(--text-muted) mt-2 tracking-wide">
+              Response within 24 hours&nbsp;&middot;&nbsp;ravigupta.exe@gmail.com
+            </p>
+          </div>
+          <a
+            href="mailto:ravigupta.exe@gmail.com"
+            className="btn-primary whitespace-nowrap shrink-0"
+          >
+            Start a Conversation
+          </a>
+        </div>
+
         {/* Main footer area */}
         <div className="py-16 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand */}

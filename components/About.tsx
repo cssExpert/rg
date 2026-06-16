@@ -148,14 +148,11 @@ export default function About() {
               viewport={{ once: true }}
               className="font-sans text-(--text-muted) leading-relaxed mb-5"
             >
-              I&apos;m <strong className="text-(--text)">Ravi Gupta</strong>, a
-              Senior Frontend Developer and UI/UX Specialist with over{" "}
-              <strong className="text-primary">
-                18 years of professional experience
-              </strong>{" "}
-              in crafting exceptional digital experiences. I specialize in
-              building scalable, performant, and visually stunning web
-              applications.
+              I didn&apos;t stumble into web development — I grew up with it.
+              Over the past{" "}
+              <strong className="text-primary">18+ years</strong>, I&apos;ve
+              worked across industries, company sizes, and tech stacks — always
+              staying at the frontier of what the web can do.
             </motion.p>
 
             <motion.p
@@ -166,11 +163,13 @@ export default function About() {
               viewport={{ once: true }}
               className="font-sans text-(--text-muted) leading-relaxed mb-8"
             >
-              My journey began with raw HTML and CSS, evolving through the rise
-              of responsive design, JavaScript frameworks, and today&apos;s
-              modern React ecosystem. I blend technical precision with a
-              designer&apos;s eye to deliver products that are both functional
-              and beautiful. Whether it&apos;s a complex SaaS dashboard or a
+              My work sits at the intersection of{" "}
+              <strong className="text-(--text)">engineering precision</strong>{" "}
+              and{" "}
+              <strong className="text-(--text)">design intuition</strong>. I
+              think in components, but I feel in pixels — I care just as much
+              about how a button feels to click as I do about the Lighthouse
+              score behind it. Whether it&apos;s a complex SaaS dashboard or a
               conversion-focused landing page, I bring the same level of
               craftsmanship to every project.
             </motion.p>

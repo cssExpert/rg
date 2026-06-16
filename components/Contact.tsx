@@ -143,7 +143,7 @@ export default function Contact() {
             className="font-sans text-(--text-muted) max-w-xl mx-auto"
           >
             Have a project in mind or want to discuss a collaboration? I&apos;d
-            love to hear from you. Typically respond within 24 hours.
+            love to hear from you. Response within 24 hours guaranteed.
           </motion.p>
         </div>
 
@@ -168,9 +168,10 @@ export default function Contact() {
                 LET&apos;S WORK <span className="text-primary">TOGETHER</span>
               </p>
               <p className="font-sans text-sm text-(--text-muted) mt-3 leading-relaxed">
-                Whether it&apos;s a startup MVP, enterprise dashboard, or a
-                complete brand redesign — I bring expertise and passion to every
-                engagement.
+                I&apos;m selective about the projects I take on — because when I
+                commit, I&apos;m fully in. If you&apos;re building something
+                ambitious and want a developer who treats your product like
+                their own, let&apos;s talk.
               </p>
             </div>
 
@@ -326,6 +327,28 @@ export default function Contact() {
                     {error}
                   </p>
                 )}
+
+                <p className="font-sans text-[11px] text-(--text-muted) text-center leading-relaxed">
+                  Protected by reCAPTCHA —{" "}
+                  <a
+                    href="https://policies.google.com/privacy"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline hover:text-primary transition-colors"
+                  >
+                    Privacy
+                  </a>{" "}
+                  &amp;{" "}
+                  <a
+                    href="https://policies.google.com/terms"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline hover:text-primary transition-colors"
+                  >
+                    Terms
+                  </a>{" "}
+                  apply.
+                </p>
 
                 <button
                   type="submit"
