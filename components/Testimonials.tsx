@@ -1,10 +1,10 @@
-"use client";
+"use client"
 
-import { motion } from "framer-motion";
-import { Quote, Star } from "lucide-react";
-import { testimonials } from "@/lib/data";
-import { TestimonialsSkeleton } from "@/components/common/Skeleton";
-import { useMounted } from "@/lib/useMounted";
+import { motion } from "framer-motion"
+import { Quote, Star } from "lucide-react"
+import { testimonials } from "@/lib/data"
+import { TestimonialsSkeleton } from "@/components/common/Skeleton"
+import { useMounted } from "@/lib/useMounted"
 
 function StarRating({ count }: { count: number }) {
   return (
@@ -17,7 +17,7 @@ function StarRating({ count }: { count: number }) {
         />
       ))}
     </div>
-  );
+  )
 }
 
 export default function Testimonials() {
@@ -52,8 +52,8 @@ export default function Testimonials() {
             transition={{ delay: 0.1 }}
             className="font-heading text-5xl sm:text-6xl lg:text-7xl text-[var(--text)] leading-none"
           >
-            Trusted by Teams & <br className="hidden sm:block" />
-            <span className="text-gradient">Founders</span>
+            WHAT CLIENTS <br className="hidden sm:block" />
+            <span className="text-gradient">SAY</span>
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -75,11 +75,7 @@ export default function Testimonials() {
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
-              transition={{
-                duration: 0.6,
-                delay: i * 0.12,
-                ease: [0.22, 1, 0.36, 1],
-              }}
+              transition={{ duration: 0.6, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] }}
               whileHover={{ y: -8 }}
               className="glass-card rounded-2xl p-7 flex flex-col relative overflow-hidden"
             >
@@ -108,11 +104,8 @@ export default function Testimonials() {
                     <p className="font-sans text-sm font-semibold text-[var(--text)]">
                       {t.name}
                     </p>
-                    <p className="font-sans text-xs text-[var(--text-muted)] mb-1">
-                      {t.role}
-                    </p>
                     <p className="font-sans text-xs text-[var(--text-muted)]">
-                      {t.year}
+                      {t.role}
                     </p>
                   </div>
                 </div>
@@ -146,5 +139,5 @@ export default function Testimonials() {
         </motion.div>
       </div>
     </section>
-  );
+  )
 }

@@ -115,23 +115,23 @@ export default function Services() {
           className="mt-12 glass-card rounded-2xl p-8 sm:p-12 flex flex-col sm:flex-row items-center justify-between gap-6"
         >
           <div>
-            <h3 className="font-heading text-2xl sm:text-3xl md:text-4xl text-(--text) mb-1">
-              18+ years of projects,{" "}
-              <span className="text-gradient">one portfolio.</span>
+            <h3 className="font-heading text-2xl sm:text-3xl text-(--text) mb-1">
+              Ready to start your{" "}
+              <span className="text-gradient">next project?</span>
             </h3>
             <p className="font-sans text-sm text-(--text-muted)">
-              Judge for yourself.
+              Let&apos;s collaborate and build something exceptional together.
             </p>
           </div>
           <button
             onClick={() =>
               document
-                .getElementById("projects")
+                .getElementById("contact")
                 ?.scrollIntoView({ behavior: "smooth" })
             }
             className="btn-primary whitespace-nowrap shrink-0"
           >
-            See My Work
+            Get In Touch
             <ArrowUpRight size={16} />
           </button>
         </motion.div>
