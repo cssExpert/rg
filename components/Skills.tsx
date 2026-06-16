@@ -83,7 +83,7 @@ function SkillChip({ skill, delay }: { skill: SkillItem; delay: number }) {
   return (
     <span
       suppressHydrationWarning
-      className="skill-chip inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-sm font-sans font-medium cursor-default select-none"
+      className="skill-chip inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-sans font-medium cursor-default select-none"
       style={
         {
           "--chip-color": chipColor,
