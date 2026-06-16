@@ -163,13 +163,13 @@ function CategoryCard({
       />
 
       {/* Accent top bar */}
-      <div
+      {/* <div
         aria-hidden="true"
         className="absolute top-0 left-0 right-0 h-[2px] rounded-t-2xl"
         style={{
           background: `linear-gradient(90deg, ${cat.accent}DD 0%, ${cat.accent}55 50%, transparent 100%)`,
         }}
-      />
+      /> */}
 
       {/* Header */}
       <div className="relative z-10 flex items-start justify-between mb-5">
