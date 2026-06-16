@@ -9,9 +9,8 @@ const Services = dynamic(() => import("@/components/Services"));
 const Projects = dynamic(() => import("@/components/Projects"));
 const Experience = dynamic(() => import("@/components/Experience"));
 const Testimonials = dynamic(() => import("@/components/Testimonials"));
-// ContactWrapper defers reCAPTCHA script until the contact section loads
-// const ContactWrapper = dynamic(() => import("@/components/ContactWrapper"));
-const Footer = dynamic(() => import("@/components/Footer"));
+const LazyContact = dynamic(() => import("@/components/LazyContact"));
+const Footer       = dynamic(() => import("@/components/Footer"));
 
 export default function Home() {
   return (
@@ -25,6 +24,7 @@ export default function Home() {
         <Projects />
         <Experience />
         <Testimonials />
+        <LazyContact />
       </main>
       <Footer />
     </>
