@@ -8,23 +8,72 @@ export const navLinks = [
   { label: "Contact", href: "#contact" },
 ];
 
-export const skills = [
-  { name: "HTML5", icon: "html", level: 98 },
-  { name: "CSS3", icon: "css", level: 97 },
-  { name: "JavaScript", icon: "js", level: 95 },
-  { name: "TypeScript", icon: "ts", level: 90 },
-  { name: "React.js", icon: "react", level: 95 },
-  { name: "Next.js", icon: "next", level: 92 },
-  { name: "Tailwind CSS", icon: "tailwind", level: 95 },
-  { name: "Bootstrap", icon: "bootstrap", level: 92 },
-  { name: "Figma", icon: "figma", level: 88 },
-  { name: "Photoshop", icon: "photoshop", level: 92 },
-  { name: "Experience Design", icon: "experience", level: 90 },
-  { name: "Illustrator", icon: "illustrator", level: 85 },
-  { name: "WordPress", icon: "wordpress", level: 90 },
-  { name: "Git", icon: "git", level: 88 },
-  { name: "Node.js", icon: "node", level: 75 },
-  { name: "jQuery", icon: "jquery", level: 75 },
+export const skillCategories = [
+  {
+    category: "Frontend",
+    accent: "#61DAFB",
+    skills: [
+      { name: "React.js", slug: "react", color: "#61DAFB" },
+      { name: "Next.js", slug: "nextdotjs", color: "#CEFF00", darkSlug: true },
+      { name: "TypeScript", slug: "typescript", color: "#3178C6" },
+      { name: "JavaScript (ES6+)", slug: "javascript", color: "#F7DF1E" },
+      { name: "HTML5", slug: "html5", color: "#E34F26" },
+      { name: "CSS3", slug: "css", color: "#00CBAD" },
+      { name: "Tailwind CSS", slug: "tailwindcss", color: "#06B6D4" },
+    ],
+  },
+  {
+    category: "UI & Design",
+    accent: "#F24E1E",
+    skills: [
+      { name: "Figma", slug: "figma", color: "#F24E1E" },
+      { name: "Adobe Photoshop", slug: "proton", color: "#009DF3" },
+      { name: "Design Systems", slug: null, color: "#8B5CF6" },
+      { name: "Prototyping", slug: null, color: "#EC4899" },
+      { name: "User Research", slug: null, color: "#F59E0B" },
+      { name: "Wireframing", slug: null, color: "#6366F1" },
+    ],
+  },
+  {
+    category: "Animation & Interaction",
+    accent: "#CEFF00",
+    skills: [
+      { name: "Framer Motion", slug: "framer", color: "#0055FF" },
+      { name: "GSAP", slug: "greensock", color: "#88CE02" },
+      {
+        name: "Three.js",
+        slug: "threedotjs",
+        color: "#C0C0C0",
+        darkSlug: true,
+      },
+      { name: "React Three Fiber", slug: "react", color: "#61DAFB" },
+      { name: "Lenis", slug: null, color: "#CEFF00" },
+    ],
+  },
+  {
+    category: "Backend & CMS",
+    accent: "#A9614A",
+    skills: [
+      { name: "Node.js", slug: "nodedotjs", color: "#339933" },
+      { name: "Laravel", slug: "laravel", color: "#FF2D20" },
+      { name: "MySQL", slug: "mysql", color: "#4479A1" },
+      { name: "GraphQL", slug: "graphql", color: "#E10098" },
+      { name: "REST APIs", slug: null, color: "#10B981" },
+      { name: "Sanity CMS", slug: "sanity", color: "#F03E2F" },
+      { name: "WordPress", slug: "wordpress", color: "#21759B" },
+    ],
+  },
+  {
+    category: "Tools",
+    accent: "#FFCC00",
+    skills: [
+      { name: "Git & GitHub", slug: "git", color: "#F05032" },
+      { name: "Vercel", slug: "vercel", color: "#CEFF00", darkSlug: true },
+      { name: "Docker", slug: "docker", color: "#2496ED" },
+      { name: "Jira", slug: "jira", color: "#0052CC" },
+      { name: "Postman", slug: "postman", color: "#FF6C37" },
+    ],
+  },
 ];
 
 // Services
@@ -32,42 +81,42 @@ export const services = [
   {
     title: "UI/UX Design",
     description:
-      "Crafting intuitive, visually stunning interfaces with user-centric design principles that convert visitors into customers.",
+      "Great products start with great design. I create user interfaces that are intuitive, accessible, and visually compelling — grounded in user research and modern design systems. From wireframes to polished prototypes in Figma, every pixel has a purpose.",
     iconName: "Palette",
     gradient: "from-[#ceff00]/20 to-[#80ff00]/5",
   },
   {
     title: "Frontend Development",
     description:
-      "Building lightning-fast, accessible, and scalable frontend applications using the latest React and Next.js ecosystem.",
+      "Clean, scalable, performant — the three words that define every line of code I write. I specialise in building component-driven frontends with React and TypeScript, with an obsessive focus on performance, accessibility, and maintainability.",
     iconName: "Code2",
     gradient: "from-[#ceff00]/20 to-[#00ff88]/5",
   },
   {
     title: "Next.js Development",
     description:
-      "Delivering server-side rendered and statically generated websites optimized for SEO, performance, and user experience.",
+      "Speed and SEO aren't a trade-off — not when you build with Next.js. I architect and develop full-stack Next.js applications with server-side rendering, static generation, and edge-ready deployments that score green on every Lighthouse metric.",
     iconName: "Layers",
     gradient: "from-[#ceff00]/20 to-[#00d4ff]/5",
   },
   {
-    title: "Landing Page Design",
+    title: "Landing Pages",
     description:
-      "Designing high-converting landing pages that tell your brand story and drive measurable business results.",
+      "Your landing page is your most valuable sales asset. I design and develop high-converting landing pages that load fast, look stunning, and are built to turn visitors into customers — backed by conversion principles and A/B-ready architecture.",
     iconName: "Layout",
     gradient: "from-[#ceff00]/20 to-[#ff6b6b]/5",
   },
   {
     title: "WordPress Development",
     description:
-      "Creating custom WordPress themes and plugins for blogs, portfolios, and business websites with clean, maintainable code.",
+      "When your team needs a CMS your clients can actually use, I build bespoke WordPress solutions with custom themes, Gutenberg blocks, and headless setups powered by React — combining content flexibility with modern frontend quality.",
     iconName: "Globe",
     gradient: "from-[#ceff00]/20 to-[#a855f7]/5",
   },
   {
     title: "Figma to HTML/React",
     description:
-      "Pixel-perfect conversion of your Figma or XD designs into clean, semantic HTML, CSS, or React components.",
+      "Your designer's vision deserves a pixel-perfect build. I take Figma files and translate them into clean, responsive, production-grade HTML/CSS/React code — with zero design debt and full responsiveness across every breakpoint.",
     iconName: "Figma",
     gradient: "from-[#ceff00]/20 to-[#f59e0b]/5",
   },
@@ -344,24 +393,27 @@ export const experience = [
 export const testimonials = [
   {
     name: "Sarah Mitchell",
-    role: "CTO, NexaTech Solutions",
+    role: "Creative Director, NexaTech Solutions",
     avatar: "SM",
     rating: 5,
-    text: "Ravi's work is nothing short of exceptional. He delivered our entire design system ahead of schedule, and the code quality is incredibly clean. His eye for detail and ability to translate complex requirements into beautiful UI is remarkable. Will definitely work together again.",
+    text: "Ravi didn't just build what we asked for — he asked the right questions, flagged what we'd missed, and delivered a product that was better than what we originally envisioned. Our load times dropped by 58% and our bounce rate followed. He's the rare developer who thinks like a product manager.",
+    year: "Next.js Web App · [2026]",
   },
   {
     name: "James Thornton",
-    role: "Founder, Luminary Commerce",
+    role: "Co-Founder, Luminary Commerce",
     avatar: "JT",
     rating: 5,
-    text: "Working with Ravi was a game-changer for our product. He completely redesigned our e-commerce platform, boosted performance by 40%, and significantly improved conversion rates. His expertise in Next.js and modern frontend is truly world-class.",
+    text: "We've collaborated with a lot of developers over the years. Ravi is the one we keep coming back to. His Figma-to-code translations are pixel-perfect, his communication is proactive, and he hits deadlines without cutting corners. An absolute professional.",
+    year: "UI Development · Figma to React · [2026]",
   },
   {
-    name: "Priya Sharma",
-    role: "Product Manager, FinFlow App",
-    avatar: "PS",
+    name: "Phoebe Cates",
+    role: "Head of Engineering, FinFlow App",
+    avatar: "PC",
     rating: 5,
-    text: "Ravi understands both design and development at a deep level. He helped us build a comprehensive UI component library that our whole team loves. Professional, punctual, and always brings creative solutions to the table. Highly recommended!",
+    text: "We brought Ravi in to modernise a legacy frontend that hadn't been touched in years. He mapped the entire codebase, proposed a migration plan, and executed it without a single day of downtime. His TypeScript expertise and attention to detail are second to none.",
+    year: "Frontend Architecture · React Migration · [2026]",
   },
 ];
 

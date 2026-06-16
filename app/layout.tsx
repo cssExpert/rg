@@ -20,33 +20,40 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Ravi Gupta | Senior Frontend Developer & UI/UX Specialist",
+  title: "Ravi Gupta | Senior Frontend Developer & UI/UX Specialist (18+ Yrs)",
   description:
-    "Ravi Gupta is a Senior Frontend Developer and UI/UX Specialist with 18+ years of experience building high-performance web applications using React, Next.js, TypeScript, and Tailwind CSS.",
+    "Ravi Gupta is a Senior Frontend Developer with 18+ years of experience building fast, beautiful web apps with React, Next.js & Tailwind CSS. Open for freelance worldwide.",
   keywords: [
-    "frontend developer",
-    "UI/UX designer",
+    "Senior Frontend Developer for hire",
     "React developer",
-    "Next.js developer",
-    "TypeScript",
-    "Tailwind CSS",
-    "web developer",
-    "freelance developer",
+    "Next.js specialist",
+    "UI/UX designer",
+    "Tailwind CSS expert",
+    "Figma to code",
+    "web application developer",
+    "TypeScript developer",
+    "hire senior frontend developer freelance",
+    "Next.js developer for startup",
+    "Figma to React developer",
+    "premium UI developer for web apps",
+    "frontend developer with 18 years experience",
   ],
   authors: [{ name: "Ravi Gupta" }],
   creator: "Ravi Gupta",
   openGraph: {
-    title: "Ravi Gupta | Senior Frontend Developer & UI/UX Specialist",
+    title:
+      "Ravi Gupta · Frontend Dev & UI/UX Specialist · Crafting Premium Web Experiences",
     description:
-      "Building premium digital experiences with modern web technologies.",
+      "18+ years turning ambitious ideas into high-performance web products. React, Next.js, Figma to Code, and beyond. Let's build something great.",
     type: "website",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Ravi Gupta | Senior Frontend Developer",
+    title:
+      "Ravi Gupta · Frontend Dev & UI/UX Specialist · Crafting Premium Web Experiences",
     description:
-      "Building premium digital experiences with modern web technologies.",
+      "18+ years turning ambitious ideas into high-performance web products. React, Next.js, Figma to Code, and beyond. Let's build something great.",
   },
   icons: {
     icon: "/favicon.svg",

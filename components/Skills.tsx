@@ -1,171 +1,178 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState, useCallback } from "react";
+import { motion } from "framer-motion";
 import { useTheme } from "next-themes";
 import { SkillsSkeleton } from "@/components/common/Skeleton";
 import { useMounted } from "@/lib/useMounted";
-import { motion, useInView } from "framer-motion";
-import { skills } from "@/lib/data";
+import { skillCategories } from "@/lib/data";
 
-/*
-  Dark-mode colors are design-accurate; light-mode overrides fix
-  contrast failures (WCAG AA ≥ 4.5:1 on white):
-    JS   #f7df1e → #7a6400  (~4.9:1)
-    Re   #61dafb → #0369a1  (~8.0:1)
-    Nx   #ceff00 → #527200  (~5.5:1)
-    Tw   #38bdf8 → #0369a1  (~8.0:1)
-*/
-const skillColors: Record<
-  string,
-  {
-    bg: string;
-    text: string;
-    icon: string;
-    lightBg?: string;
-    lightText?: string;
-  }
-> = {
-  html: { bg: "rgba(227,76,38,0.15)", text: "#e34c26", icon: "H5" },
-  css: { bg: "rgba(33,150,243,0.15)", text: "#2196f3", icon: "C3" },
-  js: {
-    bg: "rgba(247,223,30,0.15)",
-    text: "#f7df1e",
-    icon: "JS",
-    lightBg: "rgba(122,100,0,0.10)",
-    lightText: "#7a6400",
-  },
-  ts: { bg: "rgba(49,120,198,0.15)", text: "#3178c6", icon: "TS" },
-  react: {
-    bg: "rgba(97,218,251,0.15)",
-    text: "#61dafb",
-    icon: "Re",
-    lightBg: "rgba(3,105,161,0.10)",
-    lightText: "#0369a1",
-  },
-  next: {
-    bg: "rgba(206,255,0,0.15)",
-    text: "#ceff00",
-    icon: "Nx",
-    lightBg: "rgba(82,114,0,0.10)",
-    lightText: "#527200",
-  },
-  tailwind: {
-    bg: "rgba(56,189,248,0.15)",
-    text: "#38bdf8",
-    icon: "Tw",
-    lightBg: "rgba(3,105,161,0.10)",
-    lightText: "#0369a1",
-  },
-  bootstrap: { bg: "rgba(121,82,179,0.15)", text: "#7952b3", icon: "Bs" },
-  figma: { bg: "rgba(242,78,30,0.15)", text: "#f24e1e", icon: "Fg" },
-  photoshop: { bg: "rgba(0,45,80,1)", text: "#2C99EB", icon: "Ps" },
-  experience: { bg: "rgba(70,0,55,1)", text: "#FF61F6", icon: "Ex" },
-  illustrator: { bg: "rgba(50,0,0,1)", text: "#EB8C02", icon: "Ai" },
-  wordpress: { bg: "rgba(33,117,155,0.15)", text: "#21759b", icon: "Wp" },
-  git: { bg: "rgba(240,80,51,0.15)", text: "#f05033", icon: "Git" },
-  node: { bg: "rgba(104,160,99,0.15)", text: "#68a063", icon: "Nj" },
-  jquery: { bg: "rgba(15,105,175,1)", text: "#86CAFF", icon: "JQ" },
+type SkillItem = {
+  name: string;
+  slug: string | null;
+  color: string;
+  darkSlug?: boolean;
 };
 
-function SkillCard({
-  skill,
+/* ─── Skill chip with real brand logo ─── */
+function SkillChip({ skill }: { skill: SkillItem }) {
+  const [hovered, setHovered] = useState(false);
+  const { resolvedTheme } = useTheme();
+  const isDark = resolvedTheme !== "light";
+
+  const iconHex = skill.slug
+    ? skill.darkSlug
+      ? isDark
+        ? "ffffff"
+        : "000000"
+      : skill.color.replace("#", "")
+    : null;
+
+  const chipColor = skill.darkSlug && !isDark ? "#000000" : skill.color;
+
+  return (
+    <motion.span
+      suppressHydrationWarning
+      onHoverStart={() => setHovered(true)}
+      onHoverEnd={() => setHovered(false)}
+      whileHover={{ scale: 1.08, y: -3 }}
+      transition={{ type: "spring", stiffness: 500, damping: 26 }}
+      className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-sm font-sans font-medium cursor-default select-none"
+      style={{
+        borderColor: hovered ? chipColor : "var(--border)",
+        backgroundColor: hovered ? `${chipColor}18` : "rgba(255,255,255,0.03)",
+        boxShadow: hovered
+          ? `0 0 18px ${chipColor}45, 0 0 6px ${chipColor}25, inset 0 0 0 1px ${chipColor}35`
+          : "none",
+        color: hovered ? chipColor : "var(--text-muted)",
+        transition:
+          "border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease",
+      }}
+    >
+      {iconHex ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          suppressHydrationWarning
+          src={`https://cdn.simpleicons.org/${skill.slug}/${iconHex}`}
+          alt=""
+          aria-hidden="true"
+          width={16}
+          height={16}
+          loading="lazy"
+          className="shrink-0"
+        />
+      ) : (
+        <span
+          className="w-2 h-2 rounded-full shrink-0"
+          style={{
+            backgroundColor: hovered ? chipColor : "var(--text-muted)",
+            transition: "background-color 0.2s ease",
+          }}
+        />
+      )}
+      {skill.name}
+    </motion.span>
+  );
+}
+
+/* ─── Category card with mouse-tracking spotlight ─── */
+function CategoryCard({
+  cat,
   index,
+  className = "",
 }: {
-  skill: (typeof skills)[0];
+  cat: (typeof skillCategories)[0];
   index: number;
+  className?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-50px" });
-  const [animated, setAnimated] = useState(false);
-  const { resolvedTheme } = useTheme();
+  const [spot, setSpot] = useState({ x: 0, y: 0 });
+  const [active, setActive] = useState(false);
 
-  const base = skillColors[skill.icon] ?? {
-    bg: "rgba(206,255,0,0.1)",
-    text: "#ceff00",
-    icon: skill.name.slice(0, 2),
-  };
-  const isLight = resolvedTheme === "light";
-
-  const textColor = isLight && base.lightText ? base.lightText : base.text;
-  const bgColor = isLight && base.lightBg ? base.lightBg : base.bg;
-
-  useEffect(() => {
-    if (inView) {
-      const t = setTimeout(() => setAnimated(true), index * 80);
-      return () => clearTimeout(t);
-    }
-  }, [inView, index]);
+  const onMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    const r = ref.current!.getBoundingClientRect();
+    setSpot({ x: e.clientX - r.left, y: e.clientY - r.top });
+  }, []);
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 48 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-30px" }}
+      viewport={{ once: true, margin: "-60px" }}
       transition={{
-        duration: 0.5,
-        delay: index * 0.06,
+        duration: 0.65,
+        delay: index * 0.08,
         ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
       }}
-      whileHover={{ y: -6, transition: { duration: 0.2 } }}
-      className="glass-card rounded-2xl p-5 group cursor-default"
+      onMouseMove={onMove}
+      onMouseEnter={() => setActive(true)}
+      onMouseLeave={() => setActive(false)}
+      className={`glass-card relative overflow-hidden rounded-2xl p-6 ${className}`}
+      style={{
+        borderColor: active ? `${cat.accent}55` : undefined,
+        transition: "border-color 0.35s ease",
+      }}
     >
-      {/* Icon badge */}
+      {/* Mouse-tracking spotlight — the "unforgettable moment" */}
       <div
-        suppressHydrationWarning
-        className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-all duration-300 group-hover:scale-110"
-        style={{ background: bgColor }}
-      >
-        <span
-          suppressHydrationWarning
-          className="font-mono font-bold text-md md:text-lg tracking-tight"
-          style={{ color: textColor }}
-        >
-          {base.icon}
-        </span>
-      </div>
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 rounded-2xl"
+        style={{
+          opacity: active ? 1 : 0,
+          background: `radial-gradient(420px circle at ${spot.x}px ${spot.y}px, ${cat.accent}15 0%, transparent 68%)`,
+          transition: "opacity 0.35s ease",
+        }}
+      />
 
-      {/* Name + percentage */}
-      <div className="flex items-center justify-between mb-3">
-        <p className="font-sans font-semibold text-sm text-(--text)">
-          {skill.name}
-        </p>
+      {/* Card header */}
+      <div className="relative z-10 flex items-start justify-between mb-5">
+        <h3 className="font-heading text-2xl md:text-3xl tracking-wider text-(--text) leading-none">
+          {cat.category.toUpperCase()}
+        </h3>
         <span
-          suppressHydrationWarning
-          className="font-mono text-xs font-bold"
-          style={{ color: textColor }}
-        >
-          {skill.level}%
-        </span>
-      </div>
-
-      {/* Progress bar
-          Track uses --border so it's visible on both dark (rgba white/6)
-          and light (rgba black/8) backgrounds.                          */}
-      <div
-        className="h-1.5 rounded-full overflow-hidden"
-        style={{ background: "var(--border)" }}
-      >
-        <div
-          suppressHydrationWarning
-          className="h-full rounded-full relative overflow-hidden"
+          className="font-mono text-base font-bold px-2.5 py-1 rounded-lg shrink-0 ml-3 border"
           style={{
-            width: animated ? `${skill.level}%` : "0%",
-            transition: "width 1.4s cubic-bezier(0.22, 1, 0.36, 1)",
-            background: `linear-gradient(90deg, ${textColor}, ${textColor}99)`,
+            backgroundColor: `${cat.accent}18`,
+            color: cat.accent,
+            borderColor: `${cat.accent}35`,
           }}
         >
-          {/* Shimmer sweep */}
-          <span className="absolute inset-0 animate-[shimmer_2.5s_infinite] bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent)] -translate-x-full" />
-        </div>
+          {cat.skills.length}
+        </span>
+      </div>
+
+      {/* Skill chips */}
+      <div className="relative z-10 flex flex-wrap gap-2">
+        {cat.skills.map((skill, i) => (
+          <motion.div
+            key={skill.name}
+            initial={{ opacity: 0, scale: 0.75, y: 8 }}
+            whileInView={{ opacity: 1, scale: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{
+              duration: 0.32,
+              delay: index * 0.04 + i * 0.045,
+              ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
+            }}
+          >
+            <SkillChip skill={skill} />
+          </motion.div>
+        ))}
       </div>
     </motion.div>
   );
 }
 
+/* ─── Section ─── */
 export default function Skills() {
   const mounted = useMounted();
   if (!mounted) return <SkillsSkeleton />;
+
+  const totalSkills = skillCategories.reduce(
+    (sum, c) => sum + c.skills.length,
+    0,
+  );
 
   return (
     <section
@@ -174,52 +181,78 @@ export default function Skills() {
       style={{ background: "var(--bg)" }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-16">
+        {/* ── Header ── */}
+        <div className="w-full text-center mb-10">
           <motion.span
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="section-label justify-center"
+            className="section-label"
           >
             What I Know
           </motion.span>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="font-heading text-5xl sm:text-6xl lg:text-7xl text-(--text) leading-none"
-          >
-            MY <span className="text-gradient">SKILLS</span>
-          </motion.h2>
+
+          {/* Heading + ghost count side-by-side */}
+          <div className="flex items-end justify-center gap-4 sm:gap-8">
+            <motion.h2
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="font-heading text-5xl sm:text-6xl lg:text-7xl text-(--text) leading-none"
+            >
+              SKILLS & <span className="text-gradient">TECHNOLOGIES</span>
+            </motion.h2>
+          </div>
+
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 14 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="font-sans text-(--text-muted) mt-4 max-w-xl mx-auto"
+            className="font-sans text-(--text-muted) mt-3 max-w-lg mx-auto"
           >
-            18+ years of hands-on experience across the full frontend stack —
-            from design systems to production deployments.
+            Over 18 years, I&rsquo;ve built a deep, battle-tested toolkit.
+            Here&rsquo;s what I bring to every project:
           </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 0.5 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3, duration: 0.8 }}
+            className="font-heading text-6xl sm:text-8xl lg:text-9xl text-[#F76235] leading-none select-none mt-4"
+            aria-hidden="true"
+          >
+            {totalSkills}+
+          </motion.div>
         </div>
 
-        {/* Skill Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-          {skills.map((skill, i) => (
-            <SkillCard key={skill.name} skill={skill} index={i} />
-          ))}
+        {/* ── Bento grid ──
+            Row 1: Frontend (2/3) | UI & Design (1/3)
+            Row 2: Animation (1/3) | Backend & CMS (2/3)
+            Row 3: Tools (3/3)
+        */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
+          <CategoryCard
+            cat={skillCategories[0]}
+            index={0}
+            className="md:col-span-2 lg:col-span-2"
+          />
+          <CategoryCard cat={skillCategories[1]} index={1} />
+          <CategoryCard cat={skillCategories[2]} index={2} />
+          <CategoryCard cat={skillCategories[3]} index={3} />
+          <CategoryCard cat={skillCategories[4]} index={4} />
         </div>
 
-        {/* Tagline banner */}
+        {/* ── Tagline banner ── */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-16 glass-card rounded-2xl p-8 text-center"
+          className="mt-12 glass-card rounded-2xl p-8 text-center"
         >
-          <p className="font-heading text-2xl sm:text-3xl text-(--text) mb-2">
+          <p className="font-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-(--text) mb-2">
             Always <span className="text-primary">LEARNING</span>, Always{" "}
             <span className="text-primary">GROWING</span>
           </p>

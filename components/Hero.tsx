@@ -144,10 +144,11 @@ export default function Hero() {
               animate="visible"
               className="font-sans text-(--text-muted) text-base leading-relaxed max-w-lg mb-10"
             >
-              I craft pixel-perfect, high-performance web experiences that blend
-              cutting-edge technology with thoughtful design. With{" "}
+              I bridge the gap between design and engineering — crafting digital
+              products that feel as good as they perform. With{" "}
               <span className="text-primary font-semibold">18+ years</span> of
-              expertise, I transform ideas into digital products that stand out.
+              expertise, I turn ambitious ideas into fast, beautiful,
+              production-ready products.
             </motion.p>
 
             {/* CTAs */}
@@ -156,30 +157,27 @@ export default function Hero() {
               variants={fadeUp}
               initial="hidden"
               animate="visible"
-              className="flex flex-wrap gap-4 mb-12"
+              className="flex flex-col gap-4 mb-12"
             >
-              <button onClick={scrollToProjects} className="btn-primary group">
-                View Projects
-                <Icon
-                  name="LongArrow"
-                  size="20"
-                  className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"
-                />
-              </button>
-              <button
-                onClick={scrollToContact}
-                className="btn-outline bg-white dark:bg-dark"
-              >
-                Contact Me
-              </button>
-              {/* <a
-                href="#"
-                className="hidden btn-outline flex items-center gap-2"
-                aria-label="Download resume"
-              >
-                <Download size={15} />
-                Resume
-              </a> */}
+              <div className="flex flex-wrap gap-4">
+                <button onClick={scrollToProjects} className="btn-primary group">
+                  View Projects
+                  <Icon
+                    name="LongArrow"
+                    size="20"
+                    className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"
+                  />
+                </button>
+                <button
+                  onClick={scrollToContact}
+                  className="btn-outline bg-white dark:bg-dark"
+                >
+                  Let&apos;s Work Together
+                </button>
+              </div>
+              <p className="font-sans text-xs text-(--text-muted) tracking-wide">
+                Available for freelance worldwide&nbsp;&middot;&nbsp;No-commitment first call
+              </p>
             </motion.div>
 
             {/* Stats row */}
