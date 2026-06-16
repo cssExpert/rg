@@ -70,6 +70,12 @@ export default function RootLayout({
       className={`${bebasNeue.variable} ${inter.variable}`}
     >
       <head>
+        {/* Theme init — runs before React to avoid flash */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('theme');if(t!=='light')document.documentElement.classList.add('dark')}catch(e){}})()`,
+          }}
+        />
         {/* Loader styles injected into <head> so they render before any JS */}
         <style
           dangerouslySetInnerHTML={{
