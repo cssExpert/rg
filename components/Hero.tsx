@@ -1,7 +1,14 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { ChevronDown } from "lucide-react";
+import {
+  motion,
+  useMotionValue,
+  useTransform,
+  animate,
+  useInView,
+} from "framer-motion";
+import { useEffect, useRef } from "react";
+import { Download, ChevronDown } from "lucide-react";
 import { stats } from "@/lib/data";
 import Icon from "@/components/common/Icon";
 import { HeroSkeleton } from "@/components/common/Skeleton";
@@ -9,59 +16,49 @@ import { useMounted } from "@/lib/useMounted";
 
 function CountUp({ value }: { value: string }) {
   const match = value.match(/^(\d+)(.*)$/);
-  const target = match ? parseInt(match[1]) : 0;
+  const num = match ? parseInt(match[1]) : 0;
   const suffix = match ? match[2] : "";
+  const count = useMotionValue(0);
+  const display = useTransform(count, (v) => `${Math.round(v)}${suffix}`);
   const ref = useRef<HTMLSpanElement>(null);
-  const [count, setCount] = useState(0);
+  const inView = useInView(ref, { once: true });
 
   useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const obs = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) return;
-        obs.disconnect();
-        const start = performance.now();
-        const duration = 2000;
-        function tick(now: number) {
-          const elapsed = now - start;
-          const progress = Math.min(elapsed / duration, 1);
-          const ease = 1 - Math.pow(1 - progress, 3);
-          setCount(Math.round(ease * target));
-          if (progress < 1) requestAnimationFrame(tick);
-        }
-        requestAnimationFrame(tick);
-      },
-      { threshold: 0.1 },
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, [target]);
+    if (inView) animate(count, num, { duration: 2, ease: "easeOut" });
+  }, [inView, count, num]);
 
-  return (
-    <span ref={ref}>
-      {count}
-      {suffix}
-    </span>
-  );
+  return <motion.span ref={ref}>{display}</motion.span>;
 }
 
+const fadeUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: (i = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.7,
+      delay: i * 0.12,
+      ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
+    },
+  }),
+};
+
 const floatingCards = [
-  { label: "React", color: "#61DAFB", top: "8%", right: "2%", delay: 800 },
-  { label: "Next.js", color: "#CEFF00", top: "38%", right: "-4%", delay: 1000 },
+  { label: "React", color: "#61DAFB", top: "8%", right: "2%", delay: 0.8 },
+  { label: "Next.js", color: "#CEFF00", top: "38%", right: "-4%", delay: 1.0 },
   {
     label: "TypeScript",
     color: "#3178C6",
     bottom: "30%",
     right: "0%",
-    delay: 1200,
+    delay: 1.2,
   },
   {
     label: "Tailwind",
     color: "#38BDF8",
     bottom: "10%",
     left: "4%",
-    delay: 1400,
+    delay: 1.4,
   },
 ];
 
@@ -92,75 +89,75 @@ export default function Hero() {
           {/* Left – Text Content */}
           <div className="relative z-10">
             {/* Badge */}
-            <div
+            <motion.div
+              custom={0}
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/5 mb-8"
-              style={{
-                animation:
-                  "fade-up-hero 0.7s cubic-bezier(0.22,1,0.36,1) 0ms both",
-              }}
             >
               <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
               <span className="text-primary text-xs font-sans font-semibold tracking-widest uppercase">
                 Available for Freelance
               </span>
-            </div>
+            </motion.div>
 
             {/* Heading */}
-            <p
+            <motion.p
+              custom={1}
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
               className="font-heading text-2xl sm:text-3xl tracking-widest text-(--text-muted) mb-2"
-              style={{
-                animation:
-                  "fade-up-hero 0.7s cubic-bezier(0.22,1,0.36,1) 120ms both",
-              }}
             >
               Hi, I&apos;m
-            </p>
+            </motion.p>
 
-            <h1
+            <motion.h1
+              custom={2}
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
               className="font-heading text-[clamp(4rem,12vw,9rem)] leading-none tracking-wider mb-0"
-              style={{
-                animation:
-                  "fade-up-hero 0.7s cubic-bezier(0.22,1,0.36,1) 240ms both",
-              }}
             >
               <span className="text-(--text)">RAVI </span>
               <span className="text-gradient">GUPTA</span>
-            </h1>
+            </motion.h1>
 
-            <div
+            <motion.div
+              custom={3}
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
               className="flex items-center gap-3 mb-3"
-              style={{
-                animation:
-                  "fade-up-hero 0.7s cubic-bezier(0.22,1,0.36,1) 360ms both",
-              }}
             >
               <div className="h-px flex-1 max-w-12 bg-primary/60" />
               <p className="font-sans text-base sm:text-lg text-(--text-muted) tracking-wide">
                 Senior Frontend Developer &amp; UI/UX Specialist
               </p>
-            </div>
+            </motion.div>
 
-            <p
+            <motion.p
+              custom={4}
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
               className="font-sans text-(--text-muted) text-base leading-relaxed max-w-lg mb-10"
-              style={{
-                animation:
-                  "fade-up-hero 0.7s cubic-bezier(0.22,1,0.36,1) 480ms both",
-              }}
             >
               I bridge the gap between design and engineering — crafting digital
               products that feel as good as they perform. With{" "}
               <span className="text-primary font-semibold">18+ years</span> of
               expertise, I turn ambitious ideas into fast, beautiful,
               production-ready products.
-            </p>
+            </motion.p>
 
             {/* CTAs */}
-            <div
+            <motion.div
+              custom={5}
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
               className="flex flex-col gap-4 mb-12"
-              style={{
-                animation:
-                  "fade-up-hero 0.7s cubic-bezier(0.22,1,0.36,1) 600ms both",
-              }}
             >
               <div className="flex flex-wrap gap-4">
                 <button onClick={scrollToProjects} className="btn-primary group">
@@ -181,15 +178,15 @@ export default function Hero() {
               <p className="font-sans text-xs text-(--text-muted) tracking-wide">
                 Available for freelance worldwide&nbsp;&middot;&nbsp;No-commitment first call
               </p>
-            </div>
+            </motion.div>
 
             {/* Stats row */}
-            <div
+            <motion.div
+              custom={6}
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
               className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-10"
-              style={{
-                animation:
-                  "fade-up-hero 0.7s cubic-bezier(0.22,1,0.36,1) 720ms both",
-              }}
             >
               {stats.map((stat) => (
                 <div key={stat.label} className="text-center sm:text-left">
@@ -201,31 +198,33 @@ export default function Hero() {
                   </p>
                 </div>
               ))}
-            </div>
+            </motion.div>
           </div>
 
           {/* Right – Profile + Floating Cards */}
-          <div
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.9, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
             className="relative flex justify-center lg:justify-end"
-            style={{
-              animation:
-                "fade-in-scale 0.9s cubic-bezier(0.22,1,0.36,1) 400ms both",
-            }}
           >
             <div className="relative w-72 h-72 sm:w-96 sm:h-96">
-              {/* Rotating rings — CSS only */}
-              <div
+              {/* Rotating ring */}
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
                 className="absolute inset-0 rounded-full border border-dashed border-primary/20"
-                style={{ animation: "spin-cw 20s linear infinite" }}
               />
-              <div
+              <motion.div
+                animate={{ rotate: -360 }}
+                transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
                 className="absolute inset-4 rounded-full border border-dashed border-primary/10"
-                style={{ animation: "spin-ccw 30s linear infinite" }}
               />
 
               {/* Profile image area */}
               <div className="absolute inset-8 rounded-full bg-linear-to-br from-primary/20 via-surface to-darker light:via-(--card) light:to-(--bg-2) border border-primary/20 overflow-hidden flex items-end justify-center">
                 <div className="w-full h-full bg-linear-to-br from-[#1a1a1a] to-dark light:from-(--bg-2) light:to-(--card) flex items-center justify-center">
+                  {/* Avatar placeholder with initials */}
                   <div className="flex flex-col items-center gap-2">
                     <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-linear-to-br from-primary/30 to-primary/10 border-2 border-primary/40 flex items-center justify-center">
                       <span className="font-heading text-3xl sm:text-4xl text-(--text) tracking-widest">
@@ -244,16 +243,26 @@ export default function Hero() {
                 </div>
               </div>
 
-              {/* Floating tech cards — CSS fade-in with delay */}
+              {/* Floating tech cards */}
               {floatingCards.map((card) => (
-                <div
+                <motion.div
                   key={card.label}
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{
+                    delay: card.delay,
+                    duration: 0.5,
+                    ease: "easeIn",
+                  }}
+                  whileHover={{
+                    x: [0, -4, 4, -4, 4, -2, 2, 0],
+                    transition: { duration: 0.4 },
+                  }}
                   style={{
                     top: card.top,
                     right: card.right,
                     bottom: card.bottom,
                     left: card.left,
-                    animation: `fade-in-scale 0.5s ease ${card.delay}ms both`,
                   }}
                   className="absolute z-10 glass-card px-3 py-1.5 rounded-lg flex items-center gap-2 shadow-lg"
                 >
@@ -264,35 +273,49 @@ export default function Hero() {
                   <span className="font-sans text-xs font-semibold text-(--text) whitespace-nowrap">
                     {card.label}
                   </span>
-                </div>
+                </motion.div>
               ))}
 
-              {/* Experience badge — CSS bob */}
-              <div
-                className="absolute -bottom-4 glass-card border border-dark bg-dark light:bg-white light:border-dark/15 px-5 py-2.5 rounded-lg text-center whitespace-nowrap glow-primary"
-                style={{
-                  animation:
-                    "bob 3s ease-in-out 2s infinite, fade-in-scale 0.5s ease 1.2s both",
+              {/* Experience badge */}
+              <motion.div
+                initial={{ opacity: 0, y: 0 }}
+                animate={{
+                  opacity: 1,
+                  scale: 1,
+                  y: [-20, 0], // Explicitly loops only between these two vertical positions
                 }}
+                transition={{
+                  opacity: { duration: 0.5 }, // Fades in quickly once
+                  scale: { duration: 0.5 }, // Scales up quickly once
+                  y: {
+                    duration: 1.5,
+                    ease: "easeInOut",
+                    repeat: Infinity,
+                    repeatType: "reverse", // Loops only the y-axis movement
+                  },
+                }}
+                className="absolute -bottom-4 left-1/2 -translate-x-1/2 glass-card border border-dark bg-dark light:bg-white light:border-dark/15 px-5 py-2.5 rounded-lg text-center whitespace-nowrap glow-primary"
               >
                 <p className="font-heading text-xl md:text-2xl lg:text-3xl text-primary leading-none">
                   18+
                 </p>
                 <p className="font-sans text-xs text-primary">Years Exp.</p>
-              </div>
+              </motion.div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
 
       {/* Scroll indicator */}
-      <button
+      <motion.button
         onClick={() =>
           document
             .getElementById("about")
             ?.scrollIntoView({ behavior: "smooth" })
         }
-        style={{ animation: "fade-up-hero 0.5s ease 2s both" }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2 }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-(--text-muted) hover:text-primary transition-colors cursor-pointer"
         aria-label="Scroll down"
       >
@@ -300,11 +323,13 @@ export default function Hero() {
         <span className="font-sans text-xs tracking-widest uppercase">
           Scroll
         </span>
-        <ChevronDown
-          size={18}
-          style={{ animation: "bounce-y 1.5s ease-in-out infinite" }}
-        />
-      </button>
+        <motion.div
+          animate={{ y: [0, 6, 0] }}
+          transition={{ repeat: Infinity, duration: 1.5 }}
+        >
+          <ChevronDown size={18} />
+        </motion.div>
+      </motion.button>
     </section>
   );
 }
