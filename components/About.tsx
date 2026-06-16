@@ -20,7 +20,7 @@ const expertise = [
 export default function About() {
   const mounted = useMounted();
   const sectionRef = useRef<HTMLElement>(null);
-  useReveal(sectionRef);
+  useReveal(sectionRef, mounted);
 
   if (!mounted) return <AboutSkeleton />;
 
