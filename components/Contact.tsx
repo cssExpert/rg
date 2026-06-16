@@ -56,44 +56,49 @@ export default function Contact() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = useCallback(async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!executeRecaptcha) return;
-    setLoading(true);
-    setError(null);
-    try {
-      const token = await executeRecaptcha("contact_form");
+  const handleSubmit = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault();
+      if (!executeRecaptcha) return;
+      setLoading(true);
+      setError(null);
+      try {
+        const token = await executeRecaptcha("contact_form");
 
-      const captchaRes = await fetch("/api/verify-captcha", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token }),
-      });
+        const captchaRes = await fetch("/api/verify-captcha", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ token }),
+        });
 
-      if (!captchaRes.ok) {
-        setError("reCAPTCHA verification failed. Please try again.");
-        return;
+        if (!captchaRes.ok) {
+          setError("reCAPTCHA verification failed. Please try again.");
+          return;
+        }
+
+        await emailjs.send(
+          EMAILJS_SERVICE_ID,
+          EMAILJS_TEMPLATE_ID,
+          {
+            from_name: formState.name,
+            from_email: formState.email,
+            subject: formState.subject,
+            message: formState.message,
+          },
+          EMAILJS_PUBLIC_KEY,
+        );
+        setSubmitted(true);
+      } catch (err) {
+        console.error("Contact form error:", err);
+        setError(
+          "Something went wrong. Please try again or email me directly.",
+        );
+      } finally {
+        setLoading(false);
       }
-
-      await emailjs.send(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID,
-        {
-          from_name: formState.name,
-          from_email: formState.email,
-          subject: formState.subject,
-          message: formState.message,
-        },
-        EMAILJS_PUBLIC_KEY,
-      );
-      setSubmitted(true);
-    } catch (err) {
-      console.error("Contact form error:", err);
-      setError("Something went wrong. Please try again or email me directly.");
-    } finally {
-      setLoading(false);
-    }
-  }, [executeRecaptcha, formState]);
+    },
+    [executeRecaptcha, formState],
+  );
 
   if (!mounted) return <ContactSkeleton />;
 
@@ -215,7 +220,7 @@ export default function Contact() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="glass-card rounded-2xl p-8"
+            className="glass-card rounded-2xl px-5 py-7 md:p-8"
           >
             {submitted ? (
               <div className="h-full flex flex-col items-center justify-center py-12 text-center">

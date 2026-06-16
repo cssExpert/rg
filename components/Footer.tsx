@@ -41,9 +41,9 @@ export default function Footer() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main footer area */}
-        <div className="py-16 grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div className="py-16 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand */}
-          <div className="lg:col-span-2">
+          <div className="col-span-2 lg:col-span-2">
             <button
               onClick={scrollTop}
               className="font-heading inline-flex items-center gap-2 text-3xl tracking-widest mb-4"
@@ -79,8 +79,8 @@ export default function Footer() {
           </div>
 
           {/* Navigation */}
-          <div>
-            <h3 className="font-heading text-base tracking-widest text-(--text) mb-5">
+          <div className="col-span-1">
+            <h3 className="font-heading text-xl lg:text-2xl tracking-widest text-(--text) mb-5">
               NAVIGATION
             </h3>
             <ul className="space-y-3">
@@ -102,8 +102,8 @@ export default function Footer() {
           </div>
 
           {/* Services */}
-          <div>
-            <h3 className="font-heading text-base tracking-widest text-(--text) mb-5">
+          <div className="col-span-1">
+            <h3 className="font-heading text-xl lg:text-2xl tracking-widest text-(--text) mb-5">
               SERVICES
             </h3>
             <ul className="space-y-3">

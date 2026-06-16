@@ -53,7 +53,7 @@ export default function About() {
             className="relative"
           >
             {/* Main image card */}
-            <TiltCard className="p-4 sm:p-6 flex flex-col h-full">
+            <TiltCard className="p-4 sm:p-6">
               <div className="relative rounded-2xl overflow-hidden border border-neutral-900 light:border-(--border) aspect-4/5 max-w-sm mx-auto lg:mx-0">
                 <div className="absolute inset-0 bg-linear-to-br from-[#1a1a1a] via-[#111] to-darker light:from-(--bg-2) light:via-(--card) light:to-(--card)" />
                 <div className="absolute inset-0 grid-bg opacity-40" />

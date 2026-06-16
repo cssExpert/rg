@@ -17,7 +17,7 @@ export default function Experience() {
       className="py-24 md:py-36 relative overflow-hidden"
       style={{ background: "var(--bg-2)" }}
     >
-      <div className="absolute left-1/2 top-0 -translate-x-1/2 w-px h-full bg-gradient-to-b from-transparent via-primary/20 to-transparent pointer-events-none" />
+      <div className="hidden md:inline absolute left-1/2 top-0 -translate-x-1/2 w-px h-full bg-gradient-to-b from-transparent via-primary/20 to-transparent pointer-events-none" />
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}

@@ -28,12 +28,12 @@ const TiltCard = React.forwardRef<HTMLDivElement, TiltCardProps>(
       [forwardedRef],
     );
 
-    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const applyTilt = (clientX: number, clientY: number) => {
       if (!internalRef.current) return;
       const card = internalRef.current;
       const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
+      const x = clientX - rect.left;
+      const y = clientY - rect.top;
       setMousePos({ x, y });
       setIsHovered(true);
       const centerX = rect.width / 2;
@@ -45,7 +45,22 @@ const TiltCard = React.forwardRef<HTMLDivElement, TiltCardProps>(
       card.style.setProperty("--mouse-y", `${y}px`);
     };
 
+    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+      applyTilt(e.clientX, e.clientY);
+    };
+
     const handleMouseLeave = () => {
+      setTilt({ x: 0, y: 0 });
+      setIsHovered(false);
+    };
+
+    const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+      const touch = e.touches[0];
+      if (!touch) return;
+      applyTilt(touch.clientX, touch.clientY);
+    };
+
+    const handleTouchEnd = () => {
       setTilt({ x: 0, y: 0 });
       setIsHovered(false);
     };
@@ -55,6 +70,9 @@ const TiltCard = React.forwardRef<HTMLDivElement, TiltCardProps>(
         ref={setRefs}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onTouchCancel={handleTouchEnd}
         style={{
           transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
           transition: isHovered
