@@ -53,7 +53,7 @@ export default function Testimonials() {
             className="font-heading text-5xl sm:text-6xl lg:text-7xl text-(--text) leading-none"
           >
             Trusted by Teams & <br className="hidden sm:block" />
-            <span className="text-linear">Founders</span>
+            <span className="text-primary">Founders</span>
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
