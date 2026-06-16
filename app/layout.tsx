@@ -2,9 +2,8 @@ import type { Metadata } from "next";
 import { Bebas_Neue, Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import RecaptchaProvider from "@/components/RecaptchaProvider";
-import Icon from "@/components/common/Icon";
-import LoaderDismiss from "@/components/common/LoaderDismiss";
+// import Icon from "@/components/common/Icon";
+// import LoaderDismiss from "@/components/common/LoaderDismiss";
 
 const bebasNeue = Bebas_Neue({
   weight: "400",
@@ -20,33 +19,40 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Ravi Gupta | Senior Frontend Developer & UI/UX Specialist",
+  title: "Ravi Gupta | Senior Frontend Developer & UI/UX Specialist (18+ Yrs)",
   description:
-    "Ravi Gupta is a Senior Frontend Developer and UI/UX Specialist with 18+ years of experience building high-performance web applications using React, Next.js, TypeScript, and Tailwind CSS.",
+    "Ravi Gupta is a Senior Frontend Developer with 18+ years of experience building fast, beautiful web apps with React, Next.js & Tailwind CSS. Open for freelance worldwide.",
   keywords: [
-    "frontend developer",
-    "UI/UX designer",
+    "Senior Frontend Developer for hire",
     "React developer",
-    "Next.js developer",
-    "TypeScript",
-    "Tailwind CSS",
-    "web developer",
-    "freelance developer",
+    "Next.js specialist",
+    "UI/UX designer",
+    "Tailwind CSS expert",
+    "Figma to code",
+    "web application developer",
+    "TypeScript developer",
+    "hire senior frontend developer freelance",
+    "Next.js developer for startup",
+    "Figma to React developer",
+    "premium UI developer for web apps",
+    "frontend developer with 18 years experience",
   ],
   authors: [{ name: "Ravi Gupta" }],
   creator: "Ravi Gupta",
   openGraph: {
-    title: "Ravi Gupta | Senior Frontend Developer & UI/UX Specialist",
+    title:
+      "Ravi Gupta · Frontend Dev & UI/UX Specialist · Crafting Premium Web Experiences",
     description:
-      "Building premium digital experiences with modern web technologies.",
+      "18+ years turning ambitious ideas into high-performance web products. React, Next.js, Figma to Code, and beyond. Let's build something great.",
     type: "website",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Ravi Gupta | Senior Frontend Developer",
+    title:
+      "Ravi Gupta · Frontend Dev & UI/UX Specialist · Crafting Premium Web Experiences",
     description:
-      "Building premium digital experiences with modern web technologies.",
+      "18+ years turning ambitious ideas into high-performance web products. React, Next.js, Figma to Code, and beyond. Let's build something great.",
   },
   icons: {
     icon: "/favicon.svg",
@@ -162,10 +168,10 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen antialiased">
         {/* Pure-HTML loader — visible before any JS runs */}
-        <div id="rg-loader" aria-hidden="true">
+        {/* <div id="rg-loader" aria-hidden="true">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-7 w-full">
             <div id="rg-loader-brand">
-              <span className="text-[#000] group-hover:text-primary transition-colors duration-300">
+              <span className="text-black group-hover:text-primary transition-colors duration-300">
                 <Icon name="Brand" size="24" className="w-6 h-6" />
               </span>
               <span className="text-primary">&bull;</span>
@@ -182,10 +188,8 @@ export default function RootLayout({
         </div>
 
         {/* LoaderDismiss animates the counter and removes the loader after hydration */}
-        <LoaderDismiss />
-        <ThemeProvider>
-          <RecaptchaProvider>{children}</RecaptchaProvider>
-        </ThemeProvider>
+        {/* <LoaderDismiss /> */}
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );
