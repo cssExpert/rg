@@ -3,9 +3,64 @@
 import { useRef, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import { useTheme } from "next-themes";
+import {
+  SiReact,
+  SiNextdotjs,
+  SiTypescript,
+  SiJavascript,
+  SiHtml5,
+  SiCss,
+  SiTailwindcss,
+  SiFigma,
+  SiProton,
+  SiFramer,
+  SiGsap,
+  SiThreedotjs,
+  SiNodedotjs,
+  SiLaravel,
+  SiMysql,
+  SiGraphql,
+  SiSanity,
+  SiWordpress,
+  SiGit,
+  SiVercel,
+  SiDocker,
+  SiJira,
+  SiPostman,
+} from "react-icons/si";
+import type { IconType } from "react-icons";
 import { SkillsSkeleton } from "@/components/common/Skeleton";
 import { useMounted } from "@/lib/useMounted";
 import { skillCategories } from "@/lib/data";
+
+/* All icons bundled locally — zero CDN requests */
+const ICON_MAP: Record<string, IconType> = {
+  react: SiReact,
+  nextdotjs: SiNextdotjs,
+  typescript: SiTypescript,
+  javascript: SiJavascript,
+  html5: SiHtml5,
+  css: SiCss,
+  css3: SiCss,
+  proton: SiProton,
+  tailwindcss: SiTailwindcss,
+  figma: SiFigma,
+  framer: SiFramer,
+  greensock: SiGsap,
+  gsap: SiGsap,
+  threedotjs: SiThreedotjs,
+  nodedotjs: SiNodedotjs,
+  laravel: SiLaravel,
+  mysql: SiMysql,
+  graphql: SiGraphql,
+  sanity: SiSanity,
+  wordpress: SiWordpress,
+  git: SiGit,
+  vercel: SiVercel,
+  docker: SiDocker,
+  jira: SiJira,
+  postman: SiPostman,
+};
 
 type SkillItem = {
   name: string;
@@ -14,21 +69,20 @@ type SkillItem = {
   darkSlug?: boolean;
 };
 
-/* ─── Skill chip with real brand logo ─── */
+/* ─── Skill chip ─── */
 function SkillChip({ skill }: { skill: SkillItem }) {
   const [hovered, setHovered] = useState(false);
   const { resolvedTheme } = useTheme();
   const isDark = resolvedTheme !== "light";
 
-  const iconHex = skill.slug
-    ? skill.darkSlug
-      ? isDark
-        ? "ffffff"
-        : "000000"
-      : skill.color.replace("#", "")
-    : null;
-
   const chipColor = skill.darkSlug && !isDark ? "#000000" : skill.color;
+  const iconColor = skill.darkSlug
+    ? isDark
+      ? "#ffffff"
+      : "#000000"
+    : skill.color;
+
+  const IconComponent = skill.slug ? ICON_MAP[skill.slug] : null;
 
   return (
     <motion.span
@@ -49,17 +103,16 @@ function SkillChip({ skill }: { skill: SkillItem }) {
           "border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease",
       }}
     >
-      {iconHex ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
+      {IconComponent ? (
+        <IconComponent
           suppressHydrationWarning
-          src={`https://cdn.simpleicons.org/${skill.slug}/${iconHex}`}
-          alt=""
+          size={14}
+          style={{
+            color: hovered ? iconColor : "var(--text-muted)",
+            transition: "color 0.2s ease",
+            flexShrink: 0,
+          }}
           aria-hidden="true"
-          width={16}
-          height={16}
-          loading="lazy"
-          className="shrink-0"
         />
       ) : (
         <span
@@ -114,7 +167,7 @@ function CategoryCard({
         transition: "border-color 0.35s ease",
       }}
     >
-      {/* Mouse-tracking spotlight — the "unforgettable moment" */}
+      {/* Mouse-tracking spotlight */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 rounded-2xl"
@@ -187,12 +240,11 @@ export default function Skills() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="section-label"
+            className="section-label justify-center"
           >
             What I Know
           </motion.span>
 
-          {/* Heading + ghost count side-by-side */}
           <div className="flex items-end justify-center gap-4 sm:gap-8">
             <motion.h2
               initial={{ opacity: 0, y: 24 }}
@@ -230,8 +282,7 @@ export default function Skills() {
 
         {/* ── Bento grid ──
             Row 1: Frontend (2/3) | UI & Design (1/3)
-            Row 2: Animation (1/3) | Backend & CMS (2/3)
-            Row 3: Tools (3/3)
+            Row 2: Animation (1/3) | Backend & CMS (1/3) | Tools (1/3)
         */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
           <CategoryCard
