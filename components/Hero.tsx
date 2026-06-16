@@ -185,11 +185,11 @@ export default function Hero() {
               variants={fadeUp}
               initial="hidden"
               animate="visible"
-              className="flex flex-wrap gap-6 sm:gap-10"
+              className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-10"
             >
               {stats.map((stat) => (
                 <div key={stat.label} className="text-center sm:text-left">
-                  <p className="font-heading text-3xl sm:text-4xl text-primary leading-none">
+                  <p className="font-heading text-4xl md:text-5xl text-primary leading-none">
                     <CountUp value={stat.value} />
                   </p>
                   <p className="font-sans text-xs text-(--text-muted) tracking-wide mt-1">

@@ -52,10 +52,10 @@ const Stats = () => {
           key={stat.label}
         >
           <div className="text-center sm:text-left">
-            <p className="font-heading text-3xl text-primary leading-none mb-1">
+            <p className="font-heading text-4xl md:text-5xl text-primary leading-none mb-1">
               <CountUp value={stat.value} />
             </p>
-            <p className="font-sans text-xs text-(--text-muted)">
+            <p className="font-sans text-sm text-(--text-muted)">
               {stat.label}
             </p>
           </div>
