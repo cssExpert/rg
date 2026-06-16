@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { Bebas_Neue, Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import Icon from "@/components/common/Icon";
-import LoaderDismiss from "@/components/common/LoaderDismiss";
+// import Icon from "@/components/common/Icon";
+// import LoaderDismiss from "@/components/common/LoaderDismiss";
 
 const bebasNeue = Bebas_Neue({
   weight: "400",
@@ -168,10 +168,10 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen antialiased">
         {/* Pure-HTML loader — visible before any JS runs */}
-        <div id="rg-loader" aria-hidden="true">
+        {/* <div id="rg-loader" aria-hidden="true">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-7 w-full">
             <div id="rg-loader-brand">
-              <span className="text-[#000] group-hover:text-primary transition-colors duration-300">
+              <span className="text-black group-hover:text-primary transition-colors duration-300">
                 <Icon name="Brand" size="24" className="w-6 h-6" />
               </span>
               <span className="text-primary">&bull;</span>
@@ -188,10 +188,8 @@ export default function RootLayout({
         </div>
 
         {/* LoaderDismiss animates the counter and removes the loader after hydration */}
-        <LoaderDismiss />
-        <ThemeProvider>
-          {children}
-        </ThemeProvider>
+        {/* <LoaderDismiss /> */}
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );
