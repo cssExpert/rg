@@ -108,7 +108,7 @@ function SkillChip({ skill }: { skill: SkillItem }) {
           suppressHydrationWarning
           size={14}
           style={{
-            color: hovered ? iconColor : "var(--text-muted)",
+            color: hovered ? iconColor : iconColor,
             transition: "color 0.2s ease",
             flexShrink: 0,
           }}
