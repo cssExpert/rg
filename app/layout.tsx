@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { Bebas_Neue, Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
-// import Icon from "@/components/common/Icon";
-// import LoaderDismiss from "@/components/common/LoaderDismiss";
+import Icon from "@/components/common/Icon";
+import LoaderDismiss from "@/components/common/LoaderDismiss";
 
 const bebasNeue = Bebas_Neue({
   weight: "400",
@@ -78,7 +78,7 @@ export default function RootLayout({
             position: fixed;
             inset: 0;
             z-index: 9999;
-            background: #fff;
+            background: #050505;
             overflow: hidden;
             transition: opacity 0.5s ease, visibility 0.5s ease;
           }
@@ -94,7 +94,7 @@ export default function RootLayout({
             font-weight: 700;
             letter-spacing: 0.2em;
             text-transform: uppercase;
-            color: rgba(255,255,255,0.3);
+            color: rgba(5,5,5,0.3);
             display: inline-flex;
             align-items: flex-end;
             gap: 0.5rem;
@@ -107,7 +107,7 @@ export default function RootLayout({
             right: 4vw;
             font-size: clamp(5rem, 18vw, 15rem);
             font-weight: 900;
-            color: #050505;
+            color: #ffffff;
             line-height: 0.85;
             letter-spacing: -0.04em;
             font-variant-numeric: tabular-nums;
@@ -131,11 +131,11 @@ export default function RootLayout({
             left: 0;
             right: 0;
             height: 0.25rem;
-            background: rgba(5,5,5,0.07);
+            background: rgba(255,255,255,0.07);
           }
           #rg-loader-line {
             height: 100%;
-            background: #050505;
+            background: #ffffff;
             transform-origin: left center;
             transform: scaleX(0);
             animation: lineGrow 1.85s cubic-bezier(0.4, 0, 0.15, 1) forwards;
@@ -151,7 +151,7 @@ export default function RootLayout({
             width: 250vmax;
             height: 250vmax;
             border-radius: 50%;
-            background: #050505;
+            background: #ffffff;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) scale(0);
@@ -168,10 +168,10 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen antialiased">
         {/* Pure-HTML loader — visible before any JS runs */}
-        {/* <div id="rg-loader" aria-hidden="true">
+        <div id="rg-loader" aria-hidden="true">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-7 w-full">
             <div id="rg-loader-brand">
-              <span className="text-black group-hover:text-primary transition-colors duration-300">
+              <span className="text-white group-hover:text-primary transition-colors duration-300">
                 <Icon name="Brand" size="24" className="w-6 h-6" />
               </span>
               <span className="text-primary">&bull;</span>
@@ -188,7 +188,7 @@ export default function RootLayout({
         </div>
 
         {/* LoaderDismiss animates the counter and removes the loader after hydration */}
-        {/* <LoaderDismiss /> */}
+        <LoaderDismiss />
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
