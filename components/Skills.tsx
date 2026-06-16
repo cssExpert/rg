@@ -4,12 +4,29 @@ import { useRef, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import { useTheme } from "next-themes";
 import {
-  SiReact, SiNextdotjs, SiTypescript, SiJavascript,
-  SiHtml5, SiCss, SiTailwindcss, SiFigma,
-  SiProton, SiFramer, SiGsap, SiThreedotjs,
-  SiNodedotjs, SiLaravel, SiMysql, SiGraphql,
-  SiSanity, SiWordpress, SiGit, SiVercel,
-  SiDocker, SiJira, SiPostman,
+  SiReact,
+  SiNextdotjs,
+  SiTypescript,
+  SiJavascript,
+  SiHtml5,
+  SiCss,
+  SiTailwindcss,
+  SiFigma,
+  SiProton,
+  SiFramer,
+  SiGsap,
+  SiThreedotjs,
+  SiNodedotjs,
+  SiLaravel,
+  SiMysql,
+  SiGraphql,
+  SiSanity,
+  SiWordpress,
+  SiGit,
+  SiVercel,
+  SiDocker,
+  SiJira,
+  SiPostman,
 } from "react-icons/si";
 import type { IconType } from "react-icons";
 import { SkillsSkeleton } from "@/components/common/Skeleton";
@@ -17,40 +34,77 @@ import { useMounted } from "@/lib/useMounted";
 import { skillCategories } from "@/lib/data";
 
 const ICON_MAP: Record<string, IconType> = {
-  react: SiReact, nextdotjs: SiNextdotjs, typescript: SiTypescript,
-  javascript: SiJavascript, html5: SiHtml5, css: SiCss, css3: SiCss,
-  tailwindcss: SiTailwindcss, figma: SiFigma, proton: SiProton,
-  framer: SiFramer, greensock: SiGsap, gsap: SiGsap, threedotjs: SiThreedotjs,
-  nodedotjs: SiNodedotjs, laravel: SiLaravel, mysql: SiMysql, graphql: SiGraphql,
-  sanity: SiSanity, wordpress: SiWordpress, git: SiGit, vercel: SiVercel,
-  docker: SiDocker, jira: SiJira, postman: SiPostman,
+  react: SiReact,
+  nextdotjs: SiNextdotjs,
+  typescript: SiTypescript,
+  javascript: SiJavascript,
+  html5: SiHtml5,
+  css: SiCss,
+  css3: SiCss,
+  tailwindcss: SiTailwindcss,
+  figma: SiFigma,
+  proton: SiProton,
+  framer: SiFramer,
+  greensock: SiGsap,
+  gsap: SiGsap,
+  threedotjs: SiThreedotjs,
+  nodedotjs: SiNodedotjs,
+  laravel: SiLaravel,
+  mysql: SiMysql,
+  graphql: SiGraphql,
+  sanity: SiSanity,
+  wordpress: SiWordpress,
+  git: SiGit,
+  vercel: SiVercel,
+  docker: SiDocker,
+  jira: SiJira,
+  postman: SiPostman,
 };
 
-type SkillItem = { name: string; slug: string | null; color: string; darkSlug?: boolean };
+type SkillItem = {
+  name: string;
+  slug: string | null;
+  color: string;
+  darkSlug?: boolean;
+};
 
 /* ─── Skill chip — pure CSS hover, zero Framer overhead ─── */
 function SkillChip({ skill, delay }: { skill: SkillItem; delay: number }) {
   const { resolvedTheme } = useTheme();
   const isDark = resolvedTheme !== "light";
   const chipColor = skill.darkSlug && !isDark ? "#000000" : skill.color;
-  const iconColor = skill.darkSlug ? (isDark ? "#ffffff" : "#000000") : skill.color;
+  const iconColor = skill.darkSlug
+    ? isDark
+      ? "#ffffff"
+      : "#000000"
+    : skill.color;
   const IconComponent = skill.slug ? ICON_MAP[skill.slug] : null;
 
   return (
     <span
       suppressHydrationWarning
       className="skill-chip inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-sm font-sans font-medium cursor-default select-none"
-      style={{
-        "--chip-color": chipColor,
-        "--chip-bg": `${chipColor}18`,
-        "--chip-shadow": `0 0 18px ${chipColor}45, 0 0 6px ${chipColor}25, inset 0 0 0 1px ${chipColor}35`,
-        animationDelay: `${delay}ms`,
-      } as React.CSSProperties}
+      style={
+        {
+          "--chip-color": chipColor,
+          "--chip-bg": `${chipColor}18`,
+          "--chip-shadow": `0 0 18px ${chipColor}45, 0 0 6px ${chipColor}25, inset 0 0 0 1px ${chipColor}35`,
+          animationDelay: `${delay}ms`,
+        } as React.CSSProperties
+      }
     >
       {IconComponent ? (
-        <IconComponent suppressHydrationWarning size={14} style={{ color: iconColor, flexShrink: 0 }} aria-hidden="true" />
+        <IconComponent
+          suppressHydrationWarning
+          size={14}
+          style={{ color: iconColor, flexShrink: 0 }}
+          aria-hidden="true"
+        />
       ) : (
-        <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: chipColor }} />
+        <span
+          className="w-2 h-2 rounded-full shrink-0"
+          style={{ backgroundColor: chipColor }}
+        />
       )}
       {skill.name}
     </span>
@@ -58,7 +112,11 @@ function SkillChip({ skill, delay }: { skill: SkillItem; delay: number }) {
 }
 
 /* ─── Category card — spotlight via CSS custom props (no setState on mousemove) ─── */
-function CategoryCard({ cat, index, className = "" }: {
+function CategoryCard({
+  cat,
+  index,
+  className = "",
+}: {
   cat: (typeof skillCategories)[0];
   index: number;
   className?: string;
@@ -79,12 +137,19 @@ function CategoryCard({ cat, index, className = "" }: {
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.6, delay: index * 0.07, ease: [0.22, 1, 0.36, 1] as [number,number,number,number] }}
+      transition={{
+        duration: 0.6,
+        delay: index * 0.07,
+        ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
+      }}
       onMouseMove={onMove}
       onMouseEnter={() => setActive(true)}
       onMouseLeave={() => setActive(false)}
       className={`glass-card relative overflow-hidden rounded-2xl p-6 ${className}`}
-      style={{ borderColor: active ? `${cat.accent}55` : undefined, transition: "border-color 0.3s ease" }}
+      style={{
+        borderColor: active ? `${cat.accent}55` : undefined,
+        transition: "border-color 0.3s ease",
+      }}
     >
       {/* Spotlight — reads CSS custom props set by direct DOM mutation, no re-render */}
       <div
@@ -101,7 +166,9 @@ function CategoryCard({ cat, index, className = "" }: {
       <div
         aria-hidden="true"
         className="absolute top-0 left-0 right-0 h-[2px] rounded-t-2xl"
-        style={{ background: `linear-gradient(90deg, ${cat.accent}DD 0%, ${cat.accent}55 50%, transparent 100%)` }}
+        style={{
+          background: `linear-gradient(90deg, ${cat.accent}DD 0%, ${cat.accent}55 50%, transparent 100%)`,
+        }}
       />
 
       {/* Header */}
@@ -111,7 +178,11 @@ function CategoryCard({ cat, index, className = "" }: {
         </h3>
         <span
           className="font-mono text-base font-bold px-2.5 py-1 rounded-lg shrink-0 ml-3 border"
-          style={{ backgroundColor: `${cat.accent}18`, color: cat.accent, borderColor: `${cat.accent}35` }}
+          style={{
+            backgroundColor: `${cat.accent}18`,
+            color: cat.accent,
+            borderColor: `${cat.accent}35`,
+          }}
         >
           {cat.skills.length}
         </span>
@@ -120,7 +191,11 @@ function CategoryCard({ cat, index, className = "" }: {
       {/* Chips — CSS keyframe stagger, zero IntersectionObservers */}
       <div className="relative z-10 flex flex-wrap gap-2">
         {cat.skills.map((skill, i) => (
-          <SkillChip key={skill.name} skill={skill} delay={index * 40 + i * 45} />
+          <SkillChip
+            key={skill.name}
+            skill={skill}
+            delay={index * 40 + i * 45}
+          />
         ))}
       </div>
     </motion.div>
@@ -130,40 +205,54 @@ function CategoryCard({ cat, index, className = "" }: {
 export default function Skills() {
   const mounted = useMounted();
   if (!mounted) return <SkillsSkeleton />;
-  const totalSkills = skillCategories.reduce((sum, c) => sum + c.skills.length, 0);
+  const totalSkills = skillCategories.reduce(
+    (sum, c) => sum + c.skills.length,
+    0,
+  );
 
   return (
-    <section id="skills" className="py-24 md:py-36" style={{ background: "var(--bg)" }}>
+    <section
+      id="skills"
+      className="py-24 md:py-36"
+      style={{ background: "var(--bg)" }}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
         {/* Header */}
         <div className="w-full text-center mb-10">
           <motion.span
-            initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }} className="section-label justify-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="section-label justify-center"
           >
             What I Know
           </motion.span>
           <div className="flex items-end justify-center gap-4 sm:gap-8">
             <motion.h2
-              initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }} transition={{ delay: 0.1 }}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
               className="font-heading text-5xl sm:text-6xl lg:text-7xl text-(--text) leading-none"
             >
               SKILLS & <span className="text-gradient">TECHNOLOGIES</span>
             </motion.h2>
           </div>
           <motion.p
-            initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }} transition={{ delay: 0.2 }}
+            initial={{ opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
             className="font-sans text-(--text-muted) mt-3 max-w-lg mx-auto"
           >
             Over 18 years, I&rsquo;ve built a deep, battle-tested toolkit.
             Here&rsquo;s what I bring to every project:
           </motion.p>
           <motion.div
-            initial={{ opacity: 0 }} whileInView={{ opacity: 0.5 }}
-            viewport={{ once: true }} transition={{ delay: 0.3, duration: 0.8 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 0.5 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3, duration: 0.8 }}
             className="font-heading text-6xl sm:text-8xl lg:text-9xl text-[#F76235] leading-none select-none mt-4"
             aria-hidden="true"
           >
@@ -173,7 +262,11 @@ export default function Skills() {
 
         {/* Bento grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
-          <CategoryCard cat={skillCategories[0]} index={0} className="md:col-span-2 lg:col-span-2" />
+          <CategoryCard
+            cat={skillCategories[0]}
+            index={0}
+            className="md:col-span-2 lg:col-span-2"
+          />
           <CategoryCard cat={skillCategories[1]} index={1} />
           <CategoryCard cat={skillCategories[2]} index={2} />
           <CategoryCard cat={skillCategories[3]} index={3} />
@@ -182,7 +275,8 @@ export default function Skills() {
 
         {/* Tagline */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="mt-12 glass-card rounded-2xl p-8 text-center"
         >
@@ -191,7 +285,8 @@ export default function Skills() {
             <span className="text-primary">GROWING</span>
           </p>
           <p className="font-sans text-sm text-(--text-muted)">
-            Keeping up with the latest technologies to deliver future-proof solutions
+            Keeping up with the latest technologies to deliver future-proof
+            solutions
           </p>
         </motion.div>
       </div>
