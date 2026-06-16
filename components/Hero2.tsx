@@ -8,7 +8,15 @@ import {
   useInView,
 } from "framer-motion";
 import { useEffect, useRef } from "react";
-import { Download, ChevronDown } from "lucide-react";
+import dynamic from "next/dynamic";
+import { ChevronDown } from "lucide-react";
+
+const HeroModel = dynamic(() => import("@/components/HeroModel"), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-full rounded-full bg-linear-to-br from-primary/10 to-primary/5 animate-pulse" />
+  ),
+});
 import { stats } from "@/lib/data";
 import Icon from "@/components/common/Icon";
 import { HeroSkeleton } from "@/components/common/Skeleton";
@@ -160,7 +168,10 @@ export default function Hero() {
               className="flex flex-col gap-4 mb-12"
             >
               <div className="flex flex-wrap gap-4">
-                <button onClick={scrollToProjects} className="btn-primary group">
+                <button
+                  onClick={scrollToProjects}
+                  className="btn-primary group"
+                >
                   View Projects
                   <Icon
                     name="LongArrow"
@@ -176,7 +187,8 @@ export default function Hero() {
                 </button>
               </div>
               <p className="font-sans text-xs text-(--text-muted) tracking-wide">
-                Available for freelance worldwide&nbsp;&middot;&nbsp;No-commitment first call
+                Available for freelance
+                worldwide&nbsp;&middot;&nbsp;No-commitment first call
               </p>
             </motion.div>
 
@@ -221,26 +233,9 @@ export default function Hero() {
                 className="absolute inset-4 rounded-full border border-dashed border-primary/10"
               />
 
-              {/* Profile image area */}
-              <div className="absolute inset-8 rounded-full bg-linear-to-br from-primary/20 via-surface to-darker light:via-(--card) light:to-(--bg-2) border border-primary/20 overflow-hidden flex items-end justify-center">
-                <div className="w-full h-full bg-linear-to-br from-[#1a1a1a] to-dark light:from-(--bg-2) light:to-(--card) flex items-center justify-center">
-                  {/* Avatar placeholder with initials */}
-                  <div className="flex flex-col items-center gap-2">
-                    <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-linear-to-br from-primary/30 to-primary/10 border-2 border-primary/40 flex items-center justify-center">
-                      <span className="font-heading text-3xl sm:text-4xl text-(--text) tracking-widest">
-                        <Icon name="Brand" size="36" className="w-9 h-9" />
-                      </span>
-                    </div>
-                    <div className="text-center">
-                      <p className="font-heading text-base md:text-xl text-(--text) tracking-wider">
-                        RAVI GUPTA
-                      </p>
-                      <p className="font-sans text-xs text-(--text-muted) tracking-wide">
-                        Frontend Developer
-                      </p>
-                    </div>
-                  </div>
-                </div>
+              {/* 3D Model canvas */}
+              <div className="absolute inset-8 rounded-full overflow-hidden">
+                <HeroModel url="/RG.glb" />
               </div>
 
               {/* Floating tech cards */}
