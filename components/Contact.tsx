@@ -328,6 +328,28 @@ export default function Contact() {
                   </p>
                 )}
 
+                <p className="font-sans text-[11px] text-(--text-muted) text-center leading-relaxed">
+                  Protected by reCAPTCHA —{" "}
+                  <a
+                    href="https://policies.google.com/privacy"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline hover:text-primary transition-colors"
+                  >
+                    Privacy
+                  </a>{" "}
+                  &amp;{" "}
+                  <a
+                    href="https://policies.google.com/terms"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline hover:text-primary transition-colors"
+                  >
+                    Terms
+                  </a>{" "}
+                  apply.
+                </p>
+
                 <button
                   type="submit"
                   disabled={loading}

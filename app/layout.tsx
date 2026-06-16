@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Bebas_Neue, Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import RecaptchaProvider from "@/components/RecaptchaProvider";
 import Icon from "@/components/common/Icon";
 import LoaderDismiss from "@/components/common/LoaderDismiss";
 
@@ -191,7 +190,7 @@ export default function RootLayout({
         {/* LoaderDismiss animates the counter and removes the loader after hydration */}
         <LoaderDismiss />
         <ThemeProvider>
-          <RecaptchaProvider>{children}</RecaptchaProvider>
+          {children}
         </ThemeProvider>
       </body>
     </html>
