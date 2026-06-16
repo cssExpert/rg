@@ -3,7 +3,7 @@
 import { useEffect, useCallback } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ExternalLink, GitFork, ChevronLeft, ChevronRight } from "lucide-react";
+import { X, ExternalLink, GitFork, MoveLeft, MoveRight } from "lucide-react";
 import { projects } from "@/lib/data";
 
 type Project = (typeof projects)[number];
@@ -34,7 +34,7 @@ export default function ProjectModal({
       if (e.key === "ArrowLeft" && !isFirst) onPrev();
       if (e.key === "ArrowRight" && !isLast) onNext();
     },
-    [onClose, onPrev, onNext, isFirst, isLast]
+    [onClose, onPrev, onNext, isFirst, isLast],
   );
 
   useEffect(() => {
@@ -96,7 +96,10 @@ export default function ProjectModal({
             <div className="absolute bottom-4 left-6">
               <p
                 className="font-heading text-4xl sm:text-5xl leading-none select-none pointer-events-none"
-                style={{ color: "rgba(255,255,255,0.18)", letterSpacing: "0.02em" }}
+                style={{
+                  color: "rgba(255,255,255,0.18)",
+                  letterSpacing: "0.02em",
+                }}
               >
                 {project.title.split(" ").slice(0, 2).join(" ")}
               </p>
@@ -131,9 +134,11 @@ export default function ProjectModal({
                   key={tag}
                   className="px-3 py-1 rounded-full font-sans text-xs font-semibold tracking-widest uppercase"
                   style={{
-                    border: "1px solid color-mix(in srgb, var(--color-primary) 40%, transparent)",
+                    border:
+                      "1px solid color-mix(in srgb, var(--color-primary) 40%, transparent)",
                     color: "var(--color-primary)",
-                    background: "color-mix(in srgb, var(--color-primary) 8%, transparent)",
+                    background:
+                      "color-mix(in srgb, var(--color-primary) 8%, transparent)",
                   }}
                 >
                   {tag}
@@ -189,7 +194,7 @@ export default function ProjectModal({
             <div className="flex gap-3 flex-wrap">
               <a
                 href={project.liveUrl}
-                className="flex items-center gap-2 px-6 py-3 rounded-xl font-sans text-xs font-bold tracking-widest uppercase transition-opacity hover:opacity-80"
+                className="flex items-center gap-2 px-6 py-3 rounded-sm font-sans text-xs font-bold tracking-widest uppercase transition-opacity hover:opacity-80"
                 style={{
                   background: "linear-gradient(90deg, #ceff00, #80ff00)",
                   color: "#000",
@@ -200,7 +205,7 @@ export default function ProjectModal({
               </a>
               <a
                 href={project.githubUrl}
-                className="flex items-center gap-2 px-6 py-3 rounded-xl font-sans text-xs font-bold tracking-widest uppercase transition-colors"
+                className="flex items-center gap-2 px-6 py-3 rounded-sm font-sans text-xs font-bold tracking-widest uppercase transition-colors"
                 style={{
                   border: "1px solid var(--border)",
                   color: "var(--text-muted)",
@@ -235,18 +240,22 @@ export default function ProjectModal({
                 cursor: isFirst ? "not-allowed" : "pointer",
               }}
               onMouseEnter={(e) => {
-                if (!isFirst) e.currentTarget.style.color = "var(--color-primary)";
+                if (!isFirst)
+                  e.currentTarget.style.color = "var(--color-primary)";
               }}
               onMouseLeave={(e) => {
                 if (!isFirst) e.currentTarget.style.color = "var(--text-muted)";
               }}
             >
-              <ChevronLeft size={16} />
+              <MoveLeft size={16} />
               Prev
             </button>
 
             {/* Counter */}
-            <span className="font-sans text-xs text-(--text-muted)" style={{ opacity: 0.6 }}>
+            <span
+              className="font-sans text-xs text-(--text-muted)"
+              style={{ opacity: 0.6 }}
+            >
               {index + 1} / {total}
             </span>
 
@@ -261,14 +270,15 @@ export default function ProjectModal({
                 cursor: isLast ? "not-allowed" : "pointer",
               }}
               onMouseEnter={(e) => {
-                if (!isLast) e.currentTarget.style.color = "var(--color-primary)";
+                if (!isLast)
+                  e.currentTarget.style.color = "var(--color-primary)";
               }}
               onMouseLeave={(e) => {
                 if (!isLast) e.currentTarget.style.color = "var(--text-muted)";
               }}
             >
               Next
-              <ChevronRight size={16} />
+              <MoveRight size={16} />
             </button>
           </div>
         </motion.div>
