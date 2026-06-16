@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import { Quote, Star } from "lucide-react"
-import { testimonials } from "@/lib/data"
-import { TestimonialsSkeleton } from "@/components/common/Skeleton"
-import { useMounted } from "@/lib/useMounted"
+import { motion } from "framer-motion";
+import { Quote, Star } from "lucide-react";
+import { testimonials } from "@/lib/data";
+import { TestimonialsSkeleton } from "@/components/common/Skeleton";
+import { useMounted } from "@/lib/useMounted";
 
 function StarRating({ count }: { count: number }) {
   return (
@@ -17,7 +17,7 @@ function StarRating({ count }: { count: number }) {
         />
       ))}
     </div>
-  )
+  );
 }
 
 export default function Testimonials() {
@@ -32,7 +32,7 @@ export default function Testimonials() {
     >
       {/* Background */}
       <div className="absolute inset-0 grid-bg opacity-40 pointer-events-none" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-primary/4 rounded-full blur-[150px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-150 h-100 bg-primary/4 rounded-full blur-[150px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
@@ -50,17 +50,17 @@ export default function Testimonials() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="font-heading text-5xl sm:text-6xl lg:text-7xl text-[var(--text)] leading-none"
+            className="font-heading text-5xl sm:text-6xl lg:text-7xl text-(--text) leading-none"
           >
-            WHAT CLIENTS <br className="hidden sm:block" />
-            <span className="text-gradient">SAY</span>
+            Trusted by Teams & <br className="hidden sm:block" />
+            <span className="text-linear">Founders</span>
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="font-sans text-[var(--text-muted)] mt-4 max-w-lg mx-auto"
+            className="font-sans text-(--text-muted) mt-4 max-w-lg mx-auto"
           >
             Real feedback from real clients — relationships built on trust,
             quality, and results.
@@ -75,7 +75,11 @@ export default function Testimonials() {
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.6, delay: i * 0.12, ease: [0.22, 1, 0.36, 1] }}
+              transition={{
+                duration: 0.6,
+                delay: i * 0.12,
+                ease: [0.22, 1, 0.36, 1],
+              }}
               whileHover={{ y: -8 }}
               className="glass-card rounded-2xl p-7 flex flex-col relative overflow-hidden"
             >
@@ -89,22 +93,22 @@ export default function Testimonials() {
               <div className="relative z-10 flex flex-col flex-1">
                 <StarRating count={t.rating} />
 
-                <p className="font-sans text-sm text-[var(--text-muted)] leading-relaxed mb-6 flex-1">
+                <p className="font-sans text-sm text-(--text-muted) leading-relaxed mb-6 flex-1">
                   &ldquo;{t.text}&rdquo;
                 </p>
 
                 {/* Author */}
-                <div className="flex items-center gap-4 pt-5 border-t border-[var(--border)]">
-                  <div className="w-11 h-11 rounded-full bg-gradient-to-br from-primary/30 to-primary/10 border border-primary/30 flex items-center justify-center flex-shrink-0">
+                <div className="flex items-center gap-4 pt-5 border-t border-(--border)">
+                  <div className="w-11 h-11 rounded-full bg-linear-to-br from-primary/30 to-primary/10 border border-primary/30 flex items-center justify-center shrink-0">
                     <span className="font-heading text-sm text-primary tracking-widest">
                       {t.avatar}
                     </span>
                   </div>
                   <div>
-                    <p className="font-sans text-sm font-semibold text-[var(--text)]">
+                    <p className="font-sans text-sm font-semibold text-(--text)">
                       {t.name}
                     </p>
-                    <p className="font-sans text-xs text-[var(--text-muted)]">
+                    <p className="font-sans text-xs text-(--text-muted)">
                       {t.role}
                     </p>
                   </div>
@@ -131,7 +135,7 @@ export default function Testimonials() {
               <p className="font-heading text-3xl text-primary leading-none">
                 {item.value}
               </p>
-              <p className="font-sans text-xs text-[var(--text-muted)] mt-1">
+              <p className="font-sans text-xs text-(--text-muted) mt-1">
                 {item.label}
               </p>
             </div>
@@ -139,5 +143,5 @@ export default function Testimonials() {
         </motion.div>
       </div>
     </section>
-  )
+  );
 }
