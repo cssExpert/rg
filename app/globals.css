@@ -337,6 +337,41 @@ h4 {
   }
 }
 
+/* ── Framer-free entrance animations for eagerly-loaded components ── */
+@keyframes fade-up-hero {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes fade-in-scale {
+  from { opacity: 0; transform: scale(0.88); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes spin-cw  { to { transform: rotate(360deg); } }
+@keyframes spin-ccw { to { transform: rotate(-360deg); } }
+@keyframes bob {
+  0%, 100% { transform: translate(-50%, 0px); }
+  50%       { transform: translate(-50%, -20px); }
+}
+@keyframes bounce-y {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(6px); }
+}
+@keyframes slide-down {
+  from { transform: translateY(-80px); opacity: 0; }
+  to   { transform: none; opacity: 1; }
+}
+
+/* IO-driven reveal for whileInView replacements */
+.reveal-item {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal-item.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
 /* Skill chips — pure CSS hover & entrance animation (zero Framer overhead) */
 .skill-chip {
   border-color: var(--border);

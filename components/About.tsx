@@ -1,11 +1,12 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
 import { CheckCircle2 } from "lucide-react";
 import TiltCard from "./TiltCard";
 import Stats from "./Stats";
 import { AboutSkeleton } from "@/components/common/Skeleton";
 import { useMounted } from "@/lib/useMounted";
+import { useReveal } from "@/lib/useReveal";
 
 const expertise = [
   "React.js & Next.js Applications",
@@ -16,25 +17,16 @@ const expertise = [
   "Performance Optimization & SEO",
 ];
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 40 },
-  visible: (i = 0) => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.7,
-      delay: i * 0.1,
-      ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
-    },
-  }),
-};
-
 export default function About() {
   const mounted = useMounted();
+  const sectionRef = useRef<HTMLElement>(null);
+  useReveal(sectionRef);
+
   if (!mounted) return <AboutSkeleton />;
 
   return (
     <section
+      ref={sectionRef}
       id="about"
       className="py-24 md:py-36 relative overflow-hidden"
       style={{ background: "var(--bg-2)" }}
@@ -45,14 +37,7 @@ export default function About() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid gap-16 lg:gap-24 items-center lg:grid-cols-[1fr_2fr]">
           {/* Left – Visual */}
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="relative"
-          >
-            {/* Main image card */}
+          <div className="reveal-item relative" style={{ transitionDelay: "0ms" }}>
             <TiltCard className="p-4 sm:p-6">
               <div className="relative rounded-2xl overflow-hidden border border-neutral-900 light:border-(--border) aspect-4/5 max-w-sm mx-auto lg:mx-0">
                 <div className="absolute inset-0 bg-linear-to-br from-[#1a1a1a] via-[#111] to-darker light:from-(--bg-2) light:via-(--card) light:to-(--card)" />
@@ -114,54 +99,38 @@ export default function About() {
             <div className="grid grid-cols-2 gap-3 mt-4 max-w-sm mx-auto lg:mx-0">
               <Stats />
             </div>
-          </motion.div>
+          </div>
 
           {/* Right – Content */}
           <div>
-            <motion.span
-              custom={0}
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              className="section-label"
+            <span
+              className="reveal-item section-label"
+              style={{ transitionDelay: "100ms" }}
             >
               Who I Am
-            </motion.span>
+            </span>
 
-            <motion.h2
-              custom={1}
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              className="font-heading text-5xl sm:text-6xl lg:text-7xl text-(--text) leading-none mb-6"
+            <h2
+              className="reveal-item font-heading text-5xl sm:text-6xl lg:text-7xl text-(--text) leading-none mb-6"
+              style={{ transitionDelay: "200ms" }}
             >
               ABOUT <span className="text-gradient">ME</span>
-            </motion.h2>
+            </h2>
 
-            <motion.p
-              custom={2}
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              className="font-sans text-(--text-muted) leading-relaxed mb-5"
+            <p
+              className="reveal-item font-sans text-(--text-muted) leading-relaxed mb-5"
+              style={{ transitionDelay: "300ms" }}
             >
               I didn&apos;t stumble into web development — I grew up with it.
               Over the past{" "}
               <strong className="text-primary">18+ years</strong>, I&apos;ve
               worked across industries, company sizes, and tech stacks — always
               staying at the frontier of what the web can do.
-            </motion.p>
+            </p>
 
-            <motion.p
-              custom={3}
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              className="font-sans text-(--text-muted) leading-relaxed mb-8"
+            <p
+              className="reveal-item font-sans text-(--text-muted) leading-relaxed mb-8"
+              style={{ transitionDelay: "380ms" }}
             >
               My work sits at the intersection of{" "}
               <strong className="text-(--text)">engineering precision</strong>{" "}
@@ -172,16 +141,12 @@ export default function About() {
               score behind it. Whether it&apos;s a complex SaaS dashboard or a
               conversion-focused landing page, I bring the same level of
               craftsmanship to every project.
-            </motion.p>
+            </p>
 
             {/* Expertise list */}
-            <motion.div
-              custom={4}
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              className="grid sm:grid-cols-2 gap-3 mb-10"
+            <div
+              className="reveal-item grid sm:grid-cols-2 gap-3 mb-10"
+              style={{ transitionDelay: "460ms" }}
             >
               {expertise.map((item) => (
                 <div key={item} className="flex items-center gap-3">
@@ -195,15 +160,11 @@ export default function About() {
                   </span>
                 </div>
               ))}
-            </motion.div>
+            </div>
 
-            <motion.div
-              custom={5}
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              className="flex flex-wrap gap-4"
+            <div
+              className="reveal-item flex flex-wrap gap-4"
+              style={{ transitionDelay: "540ms" }}
             >
               <button
                 onClick={() =>
@@ -225,7 +186,7 @@ export default function About() {
               >
                 My Work
               </button>
-            </motion.div>
+            </div>
           </div>
         </div>
       </div>

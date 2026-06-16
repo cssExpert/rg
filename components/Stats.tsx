@@ -1,65 +1,60 @@
 "use client";
 
-import {
-  motion,
-  useMotionValue,
-  useTransform,
-  animate,
-  useInView,
-} from "framer-motion";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { stats } from "@/lib/data";
 
 function CountUp({ value }: { value: string }) {
   const match = value.match(/^(\d+)(.*)$/);
-  const num = match ? parseInt(match[1]) : 0;
+  const target = match ? parseInt(match[1]) : 0;
   const suffix = match ? match[2] : "";
-  const count = useMotionValue(0);
-  const display = useTransform(count, (v) => `${Math.round(v)}${suffix}`);
   const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true });
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
-    if (inView) animate(count, num, { duration: 2, ease: "easeOut" });
-  }, [inView, count, num]);
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        obs.disconnect();
+        const start = performance.now();
+        const duration = 2000;
+        function tick(now: number) {
+          const elapsed = now - start;
+          const progress = Math.min(elapsed / duration, 1);
+          const ease = 1 - Math.pow(1 - progress, 3);
+          setCount(Math.round(ease * target));
+          if (progress < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      },
+      { threshold: 0.1 },
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [target]);
 
-  return <motion.span ref={ref}>{display}</motion.span>;
+  return (
+    <span ref={ref}>
+      {count}
+      {suffix}
+    </span>
+  );
 }
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 40 },
-  visible: (i = 0) => ({
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.7,
-      delay: i * 0.1,
-      ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
-    },
-  }),
-};
 
 const Stats = () => {
   return (
     <>
       {stats.map((stat) => (
-        <motion.div
-          custom={6}
-          variants={fadeUp}
-          initial="hidden"
-          animate="visible"
-          className="glass-card rounded-xl p-4 text-center"
+        <div
           key={stat.label}
+          className="reveal-item glass-card rounded-xl p-4 text-center"
         >
-          <div className="text-center sm:text-left">
-            <p className="font-heading text-4xl md:text-5xl text-primary leading-none mb-1">
-              <CountUp value={stat.value} />
-            </p>
-            <p className="font-sans text-sm text-(--text-muted)">
-              {stat.label}
-            </p>
-          </div>
-        </motion.div>
+          <p className="font-heading text-4xl md:text-5xl text-primary leading-none mb-1">
+            <CountUp value={stat.value} />
+          </p>
+          <p className="font-sans text-sm text-(--text-muted)">{stat.label}</p>
+        </div>
       ))}
     </>
   );
